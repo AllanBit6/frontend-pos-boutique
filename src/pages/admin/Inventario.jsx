@@ -59,6 +59,9 @@ function Inventario(){
     const openModal = (type, data = null) => setModalState({ isOpen: true, type, data });
     const closeModal = () => setModalState({ isOpen: false, type: null, data: null });
 
+
+    const [selectedImage, setSelectedImage] = useState(null);
+
     return(
         
         <div className="inventario-wrapper">
@@ -81,19 +84,63 @@ function Inventario(){
             </div>
 
 
+
+           
             <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Registrar nuevo producto">
-            {modalState.type === "agregar" && (
-                <form onSubmit={(e) => { e.preventDefault(); console.log("Enviar a API"); closeModal(); }}>
-                <input placeholder="Nombre" required />
-                <input placeholder="Marca" />
-                <input placeholder="Color" />
-                <input placeholder="Talla" />
-                <input type="number" placeholder="Stock" />
-                <input type="number" placeholder="PrecioVenta" />
-                <button type="submit">Guardar</button>
-                </form>
-            )}
+                {modalState.type === "agregar" && (
+                    <form className="form-container" onSubmit={(e) => { e.preventDefault(); console.log("Enviar a API"); closeModal(); }}>
+
+                        <div className="h-row-form">
+                            <article className="form-left-side">
+                                <label >Nombre del producto</label>
+                                <input type="text" required />
+                                <label >Marca</label>
+                                <input type="text" />
+                                <div className="h-row-form">
+                                    <label >Color</label>
+                                    <label >Talla</label>    
+                                </div>
+                                <div className="h-row-form">
+                                    <input type="text"/>
+                                    <input type="number" />
+                                </div>
+                                
+                                <label >Stock</label>
+                                <input type="number"/>
+
+                                <div className="h-row-form">
+                                    <label >Precio compra</label>
+                                    <label >Precio venta</label>    
+                                </div>
+                                <div className="h-row-form">
+                                    <input type="number"/>
+                                    <input type="number"/>
+                                </div>
+                                
+                            </article>
+                            <article className="form-right-side">
+                                <img src={selectedImage || ""} alt="" className="form-prev-img"/>
+                                <input type="file" accept="image/*"
+                                    onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    if (file) setSelectedImage(URL.createObjectURL(file));
+                                     }}/>
+                                
+                                <label>Descripcion</label>
+                                <textarea></textarea>
+   
+                            </article>
+                            
+                        </div>
+
+                        
+                        <button type="submit">Guardar</button>
+                        
+                       
+                    </form>
+                )}
             </Modal>
+
         </div>
     )
 }

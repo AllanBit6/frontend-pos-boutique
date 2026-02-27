@@ -4,11 +4,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.692);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  filter: blur(1);
 }
 
 .modal-content {
@@ -16,8 +17,21 @@
   padding: 20px;
   border-radius: 10px;
   min-width: 300px;
+  width: 50%;
   max-width: 90%;
   position: relative;
+}
+
+.modal-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-title{
+    font-family: var(--third-font);
+    font-size: 30px;
 }
 
 .modal-close {
@@ -28,4 +42,14 @@
   background: transparent;
   font-size: 20px;
   cursor: pointer;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 5px;
 }

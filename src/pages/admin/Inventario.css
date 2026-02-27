@@ -1,0 +1,22 @@
+.inventario-wrapper{
+    flex-direction: column;
+}
+
+.inventario-searchbar{
+    flex-direction: row;
+    display: flex;
+}
+
+.inventario-table{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--custom-gray);
+    width: 100%;
+    height: 70vh;
+    margin: 10px;
+    border-radius: 10px;
+
+    overflow: scroll;
+
+}
+

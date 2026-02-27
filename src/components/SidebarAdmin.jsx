@@ -10,7 +10,9 @@ function SidebarAdmin(){
         <nav className="nav-bar">
             <Profile username="Username" role="Administrador"></Profile>
 
-            <Button type="caution">Cerrar Sesion</Button>
+            <Link to={"/login"}>
+                <Button type="caution">Cerrar Sesion</Button>
+            </Link>
             
             <hr className="separator"/>
             

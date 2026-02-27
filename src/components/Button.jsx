@@ -1,6 +1,6 @@
 import "./Button.css"
 
-function Button({children, type = "default"}){
+function Button({children, type = "default", onClick}){
     let buttonClassName = "";
     
     switch(type){
@@ -20,7 +20,7 @@ function Button({children, type = "default"}){
 
     return (
         <div>
-            <button className={buttonClassName}>{children}</button>
+            <button className={buttonClassName} onClick={onClick}>{children}</button>
         </div>
     );
 }

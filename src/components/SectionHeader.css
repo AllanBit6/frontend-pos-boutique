@@ -1,0 +1,10 @@
+.section-header{
+    width: 100%;
+    padding: 10px 5px;
+}
+
+.section-title{
+    font-family: var(--third-font);
+    font-size: 30px;
+    color: black;
+}

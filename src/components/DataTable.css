@@ -1,0 +1,36 @@
+.data-table{
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;           /* recorta las esquinas internas */
+    border-collapse: separate;
+}
+
+.data-table-header{
+
+    background-color: var(--custom-darkblue);
+
+}
+
+.data-table-header-column{
+    color: white;
+    text-align: left;
+    font-family: var(--secondary-font);
+    font-size: 14px;
+    
+}
+
+.data-table-header-column th{
+    padding: 10px;
+}
+
+.data-table-row{
+    height: 45px;
+    background-color: white;
+    font-family: var(--secondary-font);
+    font-size: 14px;
+    
+}
+
+.data-table-row td{
+    padding: 10px;  
+}

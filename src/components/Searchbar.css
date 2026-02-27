@@ -27,6 +27,8 @@
 }
 
 .searchbar-button{
+    cursor: pointer;
+    transition: 0.4s;
     font-family: var(--primary-font);
     font-weight: 600;
     font-size: 13px;
@@ -36,4 +38,9 @@
     background-color: var(--custom-darkblue);
     color: white;
     padding:0px 20px;
+}
+
+.searchbar-button:hover{
+    background-color: var(--custom-gray);
+    transition: 0.4s;
 }

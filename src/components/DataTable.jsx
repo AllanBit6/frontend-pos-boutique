@@ -22,9 +22,9 @@ export default function DataTable({ columns, data, actions, iconMap }) {
             {actions && (
               <td>
                 {actions.map((action, i) => (
-                  <button key={i} onClick={() => action.onClick(item)}>
+                  <button key={i} onClick={() => action.onClick(item)} className="table-action-button">
                     {action.icon && iconMap && iconMap[action.icon] ? (
-                      <FontAwesomeIcon icon={iconMap[action.icon]} />
+                      <FontAwesomeIcon icon={iconMap[action.icon]} className="table-action-icon"/>
                     ) : (
                       action.label
                     )}

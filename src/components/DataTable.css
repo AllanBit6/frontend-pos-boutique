@@ -15,7 +15,7 @@
     color: white;
     text-align: left;
     font-family: var(--secondary-font);
-    font-size: 14px;
+    font-size: 13px;
     
 }
 
@@ -27,7 +27,7 @@
     height: 45px;
     background-color: white;
     font-family: var(--secondary-font);
-    font-size: 14px;
+    font-size: 13px;
     color: var(--custom-darkblue);
     font-weight: 600;
     
@@ -35,4 +35,23 @@
 
 .data-table-row td{
     padding: 10px;  
+}
+
+.table-action-icon{
+    color: var(--custom-darkblue);
+    background-color: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.table-action-button{
+    border: none;
+    background-color: white;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.table-action-button:hover .table-action-icon{
+    color: var(--custom-gray);
+    transition: 0.4s;
 }

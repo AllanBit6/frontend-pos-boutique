@@ -15,3 +15,11 @@
 
 }
 
+.operations-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    align-items: flex-start;
+}
+

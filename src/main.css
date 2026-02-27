@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Istok';
+  src: url('./assets/fonts/IstokWeb-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('./assets/fonts/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
+}
+
+:root {
+  --primary-font: 'Inter', sans-serif;
+  --secondary-font: 'Istok', sans-serif;
+  --third-font: 'Space Grotesk', sans-serif;
+}

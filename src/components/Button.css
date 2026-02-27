@@ -1,0 +1,29 @@
+.btn{
+
+    margin:5px auto;
+
+    background-color: grey;
+    color: white;
+    font-family: var(--secondary-font);
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 8px;
+    display:block;
+    height: 40px;
+    width: 70%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.527);
+}
+
+.caution{
+    background-color: #E53327;
+}
+
+.accept{
+    background-color: #187701;
+}
+
+.default{
+    background-color: #012277;
+}

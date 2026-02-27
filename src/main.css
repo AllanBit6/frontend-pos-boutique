@@ -19,4 +19,17 @@
   --primary-font: 'Inter', sans-serif;
   --secondary-font: 'Istok', sans-serif;
   --third-font: 'Space Grotesk', sans-serif;
+
+  --caution-red: #E53327;
+  --custom-red: #C00000;
+  --custom-green: #187701;
+  --custom-blue: #012277;
+  --custom-yellow: #A8B400;
+  --custom-gray: #D8D8D8;
+
+
+}
+
+*{
+  text-decoration: none;
 }

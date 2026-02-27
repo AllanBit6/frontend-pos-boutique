@@ -2,11 +2,6 @@
     flex-direction: column;
 }
 
-.inventario-searchbar{
-    flex-direction: row;
-    display: flex;
-}
-
 .inventario-table{
     display: flex;
     flex-direction: column;

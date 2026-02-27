@@ -1,6 +1,7 @@
 import "./Inventario.css"
 import DataTable from "../../components/DataTable";
 import SectionHeader from "../../components/SectionHeader";
+import Searchbar from "../../components/Searchbar";
 
 // Columnas que quieres mostrar
   const columns = ["ID", "Nombre", "Marca", "Color", "Talla", "Stock", "PrecioVenta"];
@@ -43,14 +44,9 @@ function Inventario(){
     return(
         <div className="inventario-wrapper">
 
-
             <SectionHeader>INVENTARIO</SectionHeader>
 
-            <div className="inventario-searchbar">
-                <p>Buscar por: </p>
-                <input type="search" />
-                <button>Buscar</button>
-            </div>
+            <Searchbar/>
 
 
             <div className="inventario-table">

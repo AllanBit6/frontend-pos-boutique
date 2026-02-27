@@ -1,6 +1,7 @@
-import "./DataTable.css"
+import "./DataTable.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function DataTable({ columns, data, actions }) {
+export default function DataTable({ columns, data, actions, iconMap }) {
   return (
     <table cellPadding="20" cellSpacing="0" className="data-table">
       <thead className="data-table-header">
@@ -14,7 +15,6 @@ export default function DataTable({ columns, data, actions }) {
 
       <tbody className="data-table-body">
         {data.map((item, idx) => (
-
           <tr key={idx} className="data-table-row">
             {columns.map((col, i) => (
               <td key={i}>{item[col]}</td>
@@ -23,7 +23,11 @@ export default function DataTable({ columns, data, actions }) {
               <td>
                 {actions.map((action, i) => (
                   <button key={i} onClick={() => action.onClick(item)}>
-                    {action.label}
+                    {action.icon && iconMap && iconMap[action.icon] ? (
+                      <FontAwesomeIcon icon={iconMap[action.icon]} />
+                    ) : (
+                      action.label
+                    )}
                   </button>
                 ))}
               </td>

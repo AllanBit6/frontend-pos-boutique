@@ -28,6 +28,8 @@
     background-color: white;
     font-family: var(--secondary-font);
     font-size: 14px;
+    color: var(--custom-darkblue);
+    font-weight: 600;
     
 }
 

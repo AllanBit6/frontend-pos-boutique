@@ -1,19 +1,24 @@
 .btn{
 
     margin:5px auto;
-
+    transition: 0.2s;
     background-color: grey;
     color: white;
     font-family: var(--secondary-font);
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     border-radius: 8px;
     display:block;
-    height: 45px;
+    height: 35px;
     width: 200px;
     border: none;
     cursor: pointer;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.527);
+}
+
+.btn:hover{
+    transition: 0.2s;
+    filter: brightness(1.2);
 }
 
 .caution{

@@ -18,6 +18,7 @@ import { faPencil, faTrash, faCircleInfo, faBarcode} from "@fortawesome/free-sol
   const data = [
     {ID:1, Nombre:"Playera", Marca:"Nike", Color:"Negro", Talla:"S", Stock:50, PrecioVenta: "Q"+150},
     {ID:2, Nombre:"Pantalon", Marca:"Hillfinger", Color:"Blanco", Talla:"M", Stock:15, PrecioVenta: "Q"+90},
+
  
 
   ];
@@ -28,25 +29,7 @@ import { faPencil, faTrash, faCircleInfo, faBarcode} from "@fortawesome/free-sol
     info: faCircleInfo,
     barcode: faBarcode
     };
-  // Acciones por fila
-  const actions = [
-    {
-      icon: "pencil",
-      onClick: (item) => console.log("Editar:", item)
-    },
-    {
-      icon: "trash",
-      onClick: (item) => console.log("Eliminar:", item)
-    },
-    {
-      icon: "info",
-      onClick: (item) => console.log("Ver detalles", item)
-    },
-    {
-      icon: "barcode",
-      onClick: (item) => console.log("Viendo QR", item)
-    }
-  ];
+  
 
 
 
@@ -54,6 +37,29 @@ import { faPencil, faTrash, faCircleInfo, faBarcode} from "@fortawesome/free-sol
 
 
 function Inventario(){
+
+    // Acciones por fila
+  const actions = [
+  {
+    icon: "pencil",
+    onClick: (item) => openModal("editar", item)
+  },
+  {
+    icon: "trash",
+    onClick: (item) => openModal("eliminar", item)
+  },
+  {
+    icon: "info",
+    onClick: (item) => openModal("detalle", item)
+  },
+  {
+    icon: "barcode",
+    onClick: (item) => openModal("barcode", item)
+  }
+    ];
+
+
+
     const [modalState, setModalState] = useState({ isOpen: false, type: null, data: null });
 
     const openModal = (type, data = null) => setModalState({ isOpen: true, type, data });
@@ -86,7 +92,7 @@ function Inventario(){
 
 
            
-            <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Registrar nuevo producto">
+            <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Productos">
                 {modalState.type === "agregar" && (
                     <form className="form-container" onSubmit={(e) => { e.preventDefault(); console.log("Enviar a API"); closeModal(); }}>
 
@@ -95,31 +101,31 @@ function Inventario(){
                                 <label >Nombre del producto</label>
                                 <input type="text" required />
                                 <label >Marca</label>
-                                <input type="text" />
+                                <input type="text" required/>
                                 <div className="h-row-form">
                                     <label >Color</label>
                                     <label >Talla</label>    
                                 </div>
                                 <div className="h-row-form">
                                     <input type="text"/>
-                                    <input type="number" />
+                                    <input type="number" min={0}/>
                                 </div>
                                 
                                 <label >Stock</label>
-                                <input type="number"/>
+                                <input type="number" min={0}/>
 
                                 <div className="h-row-form">
                                     <label >Precio compra</label>
                                     <label >Precio venta</label>    
                                 </div>
                                 <div className="h-row-form">
-                                    <input type="number"/>
-                                    <input type="number"/>
+                                    <input type="number" min={0}/>
+                                    <input type="number" min={0}/>
                                 </div>
                                 
                             </article>
                             <article className="form-right-side">
-                                <img src={selectedImage || ""} alt="" className="form-prev-img"/>
+                                <img src={selectedImage || "#"} alt="" className="form-prev-img"/>
                                 <input type="file" accept="image/*"
                                     onChange={(e) => {
                                     const file = e.target.files[0];
@@ -134,10 +140,29 @@ function Inventario(){
                         </div>
 
                         
-                        <button type="submit">Guardar</button>
+                        <button type="submit" className="btn-light accept">Guardar</button>
                         
                        
                     </form>
+                )}
+
+                {modalState.type=== "editar" && (
+
+                    <div>
+                        <h3>Editando: {modalState.data?.Nombre}</h3>
+                    </div>
+                )}
+
+                {modalState.type === "detalle" && (
+                    <div>
+                        <h3>Detalles de: {modalState.data?.Nombre}</h3>
+                    </div>
+                )}
+
+                {modalState.type === "barcode" && (
+                    <div>
+                        <h3>Código de barras de: {modalState.data?.Nombre}</h3>
+                    </div>
                 )}
             </Modal>
 

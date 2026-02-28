@@ -25,11 +25,7 @@ function SidebarOption({ children, type = "" }) {
   return (
     <div className="sidebar-item-container">
       {selectedIcon && (
-        <FontAwesomeIcon 
-          icon={selectedIcon} 
-          size="lg" 
-          style={{ color: "white" }} 
-        />
+        <FontAwesomeIcon  icon={selectedIcon} className="sidebar-option-icon"/>
       )}
       <li className="sidebar-option">{children}</li>
     </div>

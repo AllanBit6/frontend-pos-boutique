@@ -19,10 +19,9 @@ import { faPencil, faTrash, faCircleInfo, faBarcode} from "@fortawesome/free-sol
     {ID:1, Nombre:"Playera", Marca:"Nike", Color:"Negro", Talla:"S", Stock:50, PrecioVenta: "Q"+150},
     {ID:2, Nombre:"Pantalon", Marca:"Hillfinger", Color:"Blanco", Talla:"M", Stock:15, PrecioVenta: "Q"+90},
 
- 
-
   ];
 
+  //Mapa de iconos
   const iconMap = {
     pencil: faPencil,
     trash: faTrash,
@@ -59,13 +58,42 @@ function Inventario(){
     ];
 
 
-
+    //Estado para controlar el despliegue del Modal
     const [modalState, setModalState] = useState({ isOpen: false, type: null, data: null });
+    //Estado para setear la info del producto por fila
+    const [formData, setFormData] = useState({});
 
-    const openModal = (type, data = null) => setModalState({ isOpen: true, type, data });
-    const closeModal = () => setModalState({ isOpen: false, type: null, data: null });
+    //Funcion para recoger la info de la fila y mandarla al formulario
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
 
+    //Mapeo de acciones por modal
+    const openModal = (type, data = null) => {
+        setModalState({
+            isOpen: true,
+            type,
+            data
+        });
 
+        if(data){
+            setFormData(data);
+        }
+    };
+
+    const closeModal = () => {
+        setModalState({ 
+        isOpen: false, 
+        type: null, 
+        data: null })
+            
+        setSelectedImage(null);
+    };
+
+    //Estado para cambiar la imagen de previsualizacion
     const [selectedImage, setSelectedImage] = useState(null);
 
     return(
@@ -148,15 +176,229 @@ function Inventario(){
 
                 {modalState.type=== "editar" && (
 
-                    <div>
-                        <h3>Editando: {modalState.data?.Nombre}</h3>
-                    </div>
+                    <form className="form-container"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            console.log("Enviar a API:", formData);
+                            closeModal();
+                        }}>
+
+                        <div className="h-row-form">
+                        <article className="form-left-side">
+
+                        <label>ID</label>
+                        <input
+                        type="text"
+                        name="ID"
+                        value={formData.ID || ""}
+                        readOnly
+                        />
+
+                        <label>Nombre del producto</label>
+                        <input
+                        type="text"
+                        name="Nombre"
+                        value={formData.Nombre || ""}
+                        onChange={handleChange}
+                        required
+                        />
+
+                        <label>Marca</label>
+                        <input
+                        type="text"
+                        name="Marca"
+                        value={formData.Marca || ""}
+                        onChange={handleChange}
+                        required
+                        />
+
+                        <div className="h-row-form">
+                        <label>Color</label>
+                        <label>Talla</label>
+                        </div>
+
+                        <div className="h-row-form">
+                        <input
+                        type="text"
+                        name="Color"
+                        value={formData.Color || ""}
+                        onChange={handleChange}
+                        />
+
+                        <input
+                        type="text"
+                        name="Talla"
+                        value={formData.Talla || ""}
+                        onChange={handleChange}
+                        />
+                        </div>
+
+                        <label>Stock</label>
+                        <input
+                        type="number"
+                        min={0}
+                        name="Stock"
+                        value={formData.Stock || ""}
+                        onChange={handleChange}
+                        />
+
+                        <div className="h-row-form">
+                        <label>Precio compra</label>
+                        <label>Precio venta</label>
+                        </div>
+
+                        <div className="h-row-form">
+                        <input
+                        type="number"
+                        min={0}
+                        name="PrecioCompra"
+                        value={formData.PrecioCompra || ""}
+                        onChange={handleChange}
+                        />
+
+                        <input
+                        type="text"
+                        min={0}
+                        name="PrecioVenta"
+                        value={formData.PrecioVenta || ""}
+                        onChange={handleChange}
+                        />
+                        </div>
+
+                        </article>
+
+                        <article className="form-right-side">
+
+                        <img src={selectedImage || "#"} alt="" className="form-prev-img"/>
+
+                        <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) setSelectedImage(URL.createObjectURL(file));
+                        }}
+                        />
+
+                        <label>Descripcion</label>
+                        <textarea
+                        name="Descripcion"
+                        value={formData.Descripcion || ""}
+                        onChange={handleChange}
+                        />
+
+                        </article>
+
+                        </div>
+
+                        <button type="submit" className="btn-light accept">
+                        Guardar
+                        </button>
+
+                    </form>
                 )}
 
                 {modalState.type === "detalle" && (
-                    <div>
-                        <h3>Detalles de: {modalState.data?.Nombre}</h3>
-                    </div>
+                    <form className="form-container">
+
+                        <div className="h-row-form">
+                        <article className="form-left-side">
+
+                        <label>ID</label>
+                        <input
+                        type="text"
+                        name="ID"
+                        value={formData.ID || ""}
+                        readOnly
+                        />
+
+                        <label>Nombre del producto</label>
+                        <input
+                        type="text"
+                        name="Nombre"
+                        value={formData.Nombre || ""}
+                        readOnly
+                        />
+
+                        <label>Marca</label>
+                        <input
+                        type="text"
+                        name="Marca"
+                        value={formData.Marca || ""}
+                        required
+                        readOnly
+                        />
+
+                        <div className="h-row-form">
+                        <label>Color</label>
+                        <label>Talla</label>
+                        </div>
+
+                        <div className="h-row-form">
+                        <input
+                        type="text"
+                        name="Color"
+                        value={formData.Color || ""}
+                        readOnly
+                        />
+
+                        <input
+                        type="text"
+                        name="Talla"
+                        value={formData.Talla || ""}
+                        readOnly
+                        />
+                        </div>
+
+                        <label>Stock</label>
+                        <input
+                        type="number"
+                        min={0}
+                        name="Stock"
+                        value={formData.Stock || ""}
+                        readOnly
+                        />
+
+                        <div className="h-row-form">
+                        <label>Precio compra</label>
+                        <label>Precio venta</label>
+                        </div>
+
+                        <div className="h-row-form">
+                        <input
+                        type="number"
+                        min={0}
+                        name="PrecioCompra"
+                        value={formData.PrecioCompra || ""}
+                        readOnly
+                        />
+
+                        <input
+                        type="text"
+                        min={0}
+                        name="PrecioVenta"
+                        value={formData.PrecioVenta || ""}
+                        readOnly
+                        />
+                        </div>
+
+                        </article>
+
+                        <article className="form-right-side">
+
+                        <img src={selectedImage || "#"} alt="" className="form-prev-img"/>
+
+                        <label>Descripcion</label>
+                        <textarea
+                        name="Descripcion"
+                        value={formData.Descripcion || ""}
+                        readOnly
+                        />
+
+                        </article>
+
+                        </div>
+                    </form>
                 )}
 
                 {modalState.type === "barcode" && (
@@ -164,7 +406,117 @@ function Inventario(){
                         <h3>Código de barras de: {modalState.data?.Nombre}</h3>
                     </div>
                 )}
+
+                {modalState.type === "eliminar" && (
+                    <form className="form-container" onSubmit={(e) => {
+                            e.preventDefault();
+                            console.log("Enviar a API:", formData);
+                            closeModal();
+                        }}>
+
+                        <div className="h-row-form">
+                        <article className="form-left-side">
+
+                        <label>ID</label>
+                        <input
+                        type="text"
+                        name="ID"
+                        value={formData.ID || ""}
+                        readOnly
+                        />
+
+                        <label>Nombre del producto</label>
+                        <input
+                        type="text"
+                        name="Nombre"
+                        value={formData.Nombre || ""}
+                        readOnly
+                        />
+
+                        <label>Marca</label>
+                        <input
+                        type="text"
+                        name="Marca"
+                        value={formData.Marca || ""}
+                        required
+                        readOnly
+                        />
+
+                        <div className="h-row-form">
+                        <label>Color</label>
+                        <label>Talla</label>
+                        </div>
+
+                        <div className="h-row-form">
+                        <input
+                        type="text"
+                        name="Color"
+                        value={formData.Color || ""}
+                        readOnly
+                        />
+
+                        <input
+                        type="text"
+                        name="Talla"
+                        value={formData.Talla || ""}
+                        readOnly
+                        />
+                        </div>
+
+                        <label>Stock</label>
+                        <input
+                        type="number"
+                        min={0}
+                        name="Stock"
+                        value={formData.Stock || ""}
+                        readOnly
+                        />
+
+                        <div className="h-row-form">
+                        <label>Precio compra</label>
+                        <label>Precio venta</label>
+                        </div>
+
+                        <div className="h-row-form">
+                        <input
+                        type="number"
+                        min={0}
+                        name="PrecioCompra"
+                        value={formData.PrecioCompra || ""}
+                        readOnly
+                        />
+
+                        <input
+                        type="text"
+                        min={0}
+                        name="PrecioVenta"
+                        value={formData.PrecioVenta || ""}
+                        readOnly
+                        />
+                        </div>
+
+                        </article>
+
+                        <article className="form-right-side">
+
+                        <img src={selectedImage || "#"} alt="" className="form-prev-img"/>
+
+                        <label>Descripcion</label>
+                        <textarea
+                        name="Descripcion"
+                        value={formData.Descripcion || ""}
+                        readOnly
+                        />
+
+                        </article>
+
+                        </div>
+
+                        <button type="submit" className = "btn-light caution">Eliminar</button>
+                    </form>
+                )}
             </Modal>
+            
 
         </div>
     )

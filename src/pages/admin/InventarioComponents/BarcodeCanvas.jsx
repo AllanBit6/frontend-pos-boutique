@@ -1,5 +1,7 @@
 import JsBarcode from "jsbarcode";
 import { useRef, useEffect } from "react";
+import ButtonLight from "../../../components/ButtonLight";
+import "./BarcodeCanvas.css";
 
 function BarcodeCanvas({ productID }) {
 
@@ -28,11 +30,9 @@ function BarcodeCanvas({ productID }) {
 
   return (
     <div>
-      <canvas ref={canvasRef}></canvas>
+      <canvas ref={canvasRef} className="barcode-canvas"></canvas>
 
-      <button onClick={downloadBarcode}>
-        Descargar
-      </button>
+        <ButtonLight type="accept" onClick={downloadBarcode}>Descargar</ButtonLight>
     </div>
   );
 }

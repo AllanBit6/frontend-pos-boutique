@@ -4,6 +4,7 @@ import SectionHeader from "../../components/SectionHeader";
 import Searchbar from "../../components/Searchbar";
 import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
+import BarcodeCanvas from "./InventarioComponents/BarcodeCanvas";
 
 import React, { useState } from "react";
 
@@ -403,7 +404,7 @@ function Inventario(){
 
                 {modalState.type === "barcode" && (
                     <div>
-                        <h3>Código de barras de: {modalState.data?.Nombre}</h3>
+                        <BarcodeCanvas productID={modalState.data?.ID}/>
                     </div>
                 )}
 

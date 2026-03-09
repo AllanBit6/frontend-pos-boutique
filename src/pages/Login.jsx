@@ -4,10 +4,14 @@ import { useState } from "react";
 import { login } from "../services/authService";
 import "./Login.css"
 
+import {sileo, Toaster} from "sileo";
+
+
 function Login() {
 
-  //Para redirigir segun el tipo de usuario
-  const navigate = useNavigate();
+  
+  const navigate = useNavigate(); //Para redirigir segun el tipo de usuario
+  const [error, setError] = useState(""); //Captura el error
 
   //Para cambiar recibir los inputs del form
   const [formData, setFormData] = useState({
@@ -29,7 +33,6 @@ function Login() {
       e.preventDefault();
 
     try {
-
     //Se leen los datos de la respuesta y se accede al usuario y rol
     const res = await login(formData.user_name, formData.password);
 
@@ -37,19 +40,30 @@ function Login() {
       navigate("/admin");
     }
 
-    } catch (error) {
+    } catch (err) {
 
-      console.log("Error de autenticación: ", error);
-      alert("No se pudo logear papito: ")
-      alert(error)
-
+      setError(err.response?.data?.message || "Error al iniciar sesión");
     }
   };
+
+  sileo.error({
+    title: "Something went wrong",
+    description: "Please try again later.",
+  });
+
 
 
   //Render
   return (
+
+    
     <div className="login-container">
+
+      {error && (
+          <Toaster position="top-right" />
+      )
+      }
+      
 
       <form className="login-form" onSubmit={handleLogin}>
         <h1>INICIO DE SESION</h1>

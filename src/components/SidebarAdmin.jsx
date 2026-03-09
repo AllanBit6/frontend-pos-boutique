@@ -3,15 +3,30 @@ import Profile from "./Profile"
 import Button from "./Button"
 import SidebarOption from "./SidebarOption"
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { logout } from "../services/authService";
+
+
 
 function SidebarAdmin(){
+
+    const [botonValue, setBotonValue] = useState(false);
+
+    function handleClick() {
+        if (botonValue) {
+            logout();
+
+        }
+        setBotonValue(!botonValue);
+    }      
+
 
     return(
         <nav className="nav-bar">
             <Profile username="Username" role="Administrador"></Profile>
 
             <Link to={"/login"}>
-                <Button type="caution" id="logout-btn">Cerrar Sesion</Button>
+                <Button type="caution" id="logout-btn" onClick={handleClick}>Cerrar Sesion</Button>
             </Link>
             
             <hr className="separator"/>

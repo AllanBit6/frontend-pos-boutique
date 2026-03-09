@@ -10,6 +10,8 @@ import Ventas from "./pages/admin/Ventas";
 import Inicio from "./pages/admin/Inicio";
 
 
+import ProtectedRoute from "./components/ProtectedRoute";
+
 function App() {
   return (
     <Routes>
@@ -18,13 +20,19 @@ function App() {
 
 
 
-      <Route path="/admin" element = {<Admin/>}>
-      
-        <Route index element={<Inicio/>}/>
-        <Route path="inventario" element={<Inventario/>}/>
-        <Route path="usuarios" element={<Usuarios/>}/>
-        <Route path="reportes" element={<Reportes/>}/>
-        <Route path="ventas" element={<Ventas/>}/>
+      <Route path="/admin" element = {
+        <ProtectedRoute>
+          <Admin/>
+        </ProtectedRoute>
+        
+        }>
+
+          <Route index element={<Inicio/>}/>
+          <Route path="inventario" element={<Inventario/>}/>
+          <Route path="usuarios" element={<Usuarios/>}/>
+          <Route path="reportes" element={<Reportes/>}/>
+          <Route path="ventas" element={<Ventas/>}/>
+        
         
       </Route>
 

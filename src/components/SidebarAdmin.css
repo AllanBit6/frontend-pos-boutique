@@ -12,18 +12,18 @@
 }
 
 /*Prototipando*/
-.nav-bar:active{
+.nav-bar .collapsed{
     transform: translateX(-100%);
     transition: 0.5s;
     width: 0%;
 }
 
-.nav-bar:active .user-profile{
+.nav-bar .collapsed .user-profile{
     transform: scaleX(0);
     transition: 0.5s;
 }
 
-.nav-bar:active #logout-btn{
+.nav-bar .collapsed #logout-btn{
     transform: scaleX(0);
     transition: 0.5s;
 }

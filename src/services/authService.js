@@ -40,8 +40,10 @@ export const getMe = async () => {
 export const logout = async () => {
     const res = await axios.post(
         `${API}/api/v1/auth/logout`,
-        {}, // body vacío si no necesitas enviar nada
-        { withCredentials: true } // <- aquí va
+        {},
+        { withCredentials: true }
     );
+
+    console.log(res.data)
     return res.data;
 };

@@ -4,11 +4,13 @@ import Button from "./Button"
 import SidebarOption from "./SidebarOption"
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { logout, getMe } from "../services/authService";
 
 function SidebarAdmin() {
   const [userData, setUserData] = useState({ username: "", role: "" });
   const [botonValue, setBotonValue] = useState(false);
+  const navigate = useNavigate();
 
   // Obtener datos del usuario al montar el componente
   useEffect(() => {
@@ -25,9 +27,12 @@ function SidebarAdmin() {
     fetchUser();
   }, []);
 
+
+  
   function handleClick() {
     if (botonValue) {
       logout();
+      navigate("/login");
     }
     setBotonValue(!botonValue);
   }
@@ -37,11 +42,10 @@ function SidebarAdmin() {
       {/* Pasamos los datos del usuario desde el state */}
       <Profile username={userData.username} role={userData.role} />
 
-      <Link to={"/login"}>
+
         <Button type="caution" id="logout-btn" onClick={handleClick}>
           Cerrar Sesión
         </Button>
-      </Link>
 
       <hr className="separator" />
 

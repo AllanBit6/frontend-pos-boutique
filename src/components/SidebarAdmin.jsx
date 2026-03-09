@@ -3,58 +3,69 @@ import Profile from "./Profile"
 import Button from "./Button"
 import SidebarOption from "./SidebarOption"
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { logout } from "../services/authService";
+import { useState, useEffect } from "react";
+import { logout, getMe } from "../services/authService";
 
+function SidebarAdmin() {
+  const [userData, setUserData] = useState({ username: "", role: "" });
+  const [botonValue, setBotonValue] = useState(false);
 
+  // Obtener datos del usuario al montar el componente
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await getMe();
+        setUserData({ username: res.user_name, role: res.rol });
+      } catch (err) {
+        console.error("Error al obtener usuario:", err);
+        setUserData({ username: "Desconocido", role: "Desconocido" });
+      }
+    };
 
-function SidebarAdmin(){
+    fetchUser();
+  }, []);
 
-    const [botonValue, setBotonValue] = useState(false);
+  function handleClick() {
+    if (botonValue) {
+      logout();
+    }
+    setBotonValue(!botonValue);
+  }
 
-    function handleClick() {
-        if (botonValue) {
-            logout();
+  return (
+    <nav className="nav-bar">
+      {/* Pasamos los datos del usuario desde el state */}
+      <Profile username={userData.username} role={userData.role} />
 
-        }
-        setBotonValue(!botonValue);
-    }      
+      <Link to={"/login"}>
+        <Button type="caution" id="logout-btn" onClick={handleClick}>
+          Cerrar Sesión
+        </Button>
+      </Link>
 
+      <hr className="separator" />
 
-    return(
-        <nav className="nav-bar">
-            <Profile username="Username" role="Administrador"></Profile>
+      <div className="sidebar-options-container">
+        <Link to="/admin">
+          <SidebarOption type="home">Inicio</SidebarOption>
+        </Link>
+        <Link to="/admin/inventario">
+          <SidebarOption type="tables">Inventario</SidebarOption>
+        </Link>
+        <Link to="/admin/usuarios">
+          <SidebarOption type="user">Usuarios</SidebarOption>
+        </Link>
+        <Link to="/admin/reportes">
+          <SidebarOption type="reports">Reportes</SidebarOption>
+        </Link>
+        <Link to="/admin/ventas">
+          <SidebarOption type="sales">Ventas</SidebarOption>
+        </Link>
+      </div>
 
-            <Link to={"/login"}>
-                <Button type="caution" id="logout-btn" onClick={handleClick}>Cerrar Sesion</Button>
-            </Link>
-            
-            <hr className="separator"/>
-            
-            <div className="sidebar-options-container">
-                <Link to="/admin">
-                    <SidebarOption type="home">Inicio</SidebarOption>
-                </Link> 
-                <Link to="/admin/inventario">
-                    <SidebarOption type="tables">Inventario</SidebarOption> 
-                </Link>
-                <Link to="/admin/usuarios">
-                    <SidebarOption type="user">Usuarios</SidebarOption>
-                </Link>
-                <Link to="/admin/reportes">
-                    <SidebarOption type="reports">Reportes</SidebarOption>
-                </Link>
-                <Link to="/admin/ventas">
-                    <SidebarOption type="sales">Ventas</SidebarOption>
-                </Link>
-                
-            </div>
-
-            <hr className="separator"/>
-
-        </nav>
-
-    )
+      <hr className="separator" />
+    </nav>
+  );
 }
 
 export default SidebarAdmin;

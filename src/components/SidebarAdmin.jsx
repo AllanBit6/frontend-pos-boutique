@@ -11,7 +11,7 @@ function SidebarAdmin(){
             <Profile username="Username" role="Administrador"></Profile>
 
             <Link to={"/login"}>
-                <Button type="caution">Cerrar Sesion</Button>
+                <Button type="caution" id="logout-btn">Cerrar Sesion</Button>
             </Link>
             
             <hr className="separator"/>

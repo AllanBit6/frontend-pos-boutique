@@ -5,6 +5,7 @@
     justify-self: flex-start;
     gap: 10px;
     margin: 30px 15px 20px;
+    width: auto;
     
 }
 .user-avatar{
@@ -24,6 +25,7 @@
     color: white;
     font-family: var(--primary-font);
     font-weight: 800;
+    
 }
 
 .user-userole{

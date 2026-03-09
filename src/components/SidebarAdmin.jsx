@@ -9,7 +9,6 @@ import { logout, getMe } from "../services/authService";
 
 function SidebarAdmin() {
   const [userData, setUserData] = useState({ username: "", role: "" });
-  const [botonValue, setBotonValue] = useState(false);
   const navigate = useNavigate();
 
   // Obtener datos del usuario al montar el componente
@@ -29,12 +28,13 @@ function SidebarAdmin() {
 
 
   
-  function handleClick() {
-    if (botonValue) {
-      logout();
-      navigate("/login");
-    }
-    setBotonValue(!botonValue);
+  async function handleClick() {
+    try {
+      await logout(); // espera a que se borre la cookie
+      navigate("/login"); // redirige solo después
+    } catch (err) {
+      console.error("Error al cerrar sesión:", err);
+  }
   }
 
   return (

@@ -47,8 +47,8 @@ function Login() {
   };
 
   sileo.error({
-    title: "Something went wrong",
-    description: "Please try again later.",
+    title: "Algo salio mal",
+    description: "Pruebo de nuevo luego.",
   });
 
 
@@ -60,7 +60,7 @@ function Login() {
     <div className="login-container">
 
       {error && (
-          <Toaster position="top-right" />
+          <Toaster position="top-center" />
       )
       }
       
@@ -68,14 +68,13 @@ function Login() {
       <form className="login-form" onSubmit={handleLogin}>
         <h1>INICIO DE SESION</h1>
 
-        <p>Ingrese sus credenciales para continuar</p>
+        <p className="login-instructions">Ingrese sus credenciales para continuar</p>
         
         <label htmlFor="">Nombre de usuario</label>
         <input
               type="text"
               name="user_name"
               id="username-input"
-              placeholder="Ingrese su nombre de usuario"
               value={formData.user_name}
               onChange={handleChange}
             />
@@ -85,7 +84,6 @@ function Login() {
               type="password"
               name="password"
               id="password-input"
-              placeholder="Ingrese su contraseña"
               value={formData.password}
               onChange={handleChange}
             />

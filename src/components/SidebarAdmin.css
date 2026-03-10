@@ -21,17 +21,6 @@
     width: 0%;
 }
 
-.nav-bar.collapsed .user-profile{
-    transform: scaleX(0);
-    transition: 0.5s;
-    
-}
-
-.nav-bar.collapsed #logout-btn{
-    transform: scaleX(0);
-    transition: 0.5s;
-}
-
 .separator{
     width: 100%;
     border: rgba(255, 255, 255, 0.247) solid 1px;

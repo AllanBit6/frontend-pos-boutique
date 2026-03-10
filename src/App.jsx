@@ -8,39 +8,44 @@ import Usuarios from "./pages/admin/Usuarios";
 import Inventario from "./pages/admin/Inventario";
 import Ventas from "./pages/admin/Ventas";
 import Inicio from "./pages/admin/Inicio";
-
+import { Toaster } from "sileo";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/login" element = {<Login/>} />
+    <>
+      <Toaster/>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element = {<Login/>} />
 
 
 
-      <Route path="/admin" element = {
-        <ProtectedRoute>
-          <Admin/>
-        </ProtectedRoute>
-        
-        }>
+        <Route path="/admin" element = {
+          <ProtectedRoute>
+            <Admin/>
+          </ProtectedRoute>
+          
+          }>
 
-          <Route index element={<Inicio/>}/>
-          <Route path="inventario" element={<Inventario/>}/>
-          <Route path="usuarios" element={<Usuarios/>}/>
-          <Route path="reportes" element={<Reportes/>}/>
-          <Route path="ventas" element={<Ventas/>}/>
-        
-        
-      </Route>
+            <Route index element={<Inicio/>}/>
+            <Route path="inventario" element={<Inventario/>}/>
+            <Route path="usuarios" element={<Usuarios/>}/>
+            <Route path="reportes" element={<Reportes/>}/>
+            <Route path="ventas" element={<Ventas/>}/>
+          
+          
+        </Route>
 
 
 
-      <Route path="/cashier" element = {<Cashier/>} />
+        <Route path="/cashier" element = {<Cashier/>} />
 
-    </Routes>
+      </Routes>
+    
+    </>
+    
   );
 }
 

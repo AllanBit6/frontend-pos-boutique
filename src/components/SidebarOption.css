@@ -20,15 +20,19 @@
 
 .sidebar-item-container:hover{
     background-color: rgba(255, 255, 255, 0.349);
-    transition: 0.2s;
+    transition: 0.2s ease-in-out;
+    transform: scale(1.1);
     
+}
+
+.selected .sidebar-item-container{
+    background-color: var(--custom-gray);
+}
+.selected .sidebar-item-container .sidebar-option, 
+.selected .sidebar-item-container .sidebar-option-icon{
+    color: var(--custom-darkblue);
 }
 
 .sidebar-item-container:active{
     background-color: #e0e0e0;
-}
-
-.sidebar-item-container:hover .sidebar-option-icon{
-    font-size: 25px;
-    transition: 0.2s;
 }

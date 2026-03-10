@@ -2,14 +2,15 @@ import "./SidebarAdmin.css"
 import Profile from "./Profile"
 import Button from "./Button"
 import SidebarOption from "./SidebarOption"
-import { Link } from "react-router-dom";
-import { useState, useEffect, Fragment } from "react";
+import { NavLink } from "react-router-dom";
+import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { logout, getMe } from "../services/authService";
 import SidebarCommander from "./SidebarCommander";
+import { useAuth } from "../context/AuthContext";
+import { logout } from "../services/authService";
 
 function SidebarAdmin() {
-  const [userData, setUserData] = useState({ username: "", role: "" });
+  
   const navigate = useNavigate();
   const [sidebarCollapse, setSidebarCollapse] = useState("nav-bar");
 
@@ -23,36 +24,24 @@ function SidebarAdmin() {
   }
 
   // Obtener datos del usuario al montar el componente
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await getMe();
-        setUserData({ username: res.user_name, role: res.rol });
-      } catch (err) {
-        console.error("Error al obtener usuario:", err);
-        setUserData({ username: "Desconocido", role: "Desconocido" });
-      }
-    };
-
-    fetchUser();
-  }, []);
-
+  const {user, setUser} = useAuth();
 
   
   async function handleClick() {
     try {
-      await logout(); // espera a que se borre la cookie
-      navigate("/login"); // redirige solo después
+      await logout();
+      setUser(null);
+      navigate("/login");
     } catch (err) {
       console.error("Error al cerrar sesión:", err);
-  }
+    }
   }
 
   return (
     <Fragment>
       <nav className={sidebarCollapse}>
         {/* Pasamos los datos del usuario desde el state */}
-        <Profile username={userData.username} role={userData.role} />
+        <Profile username={user?.user_name} role={user?.rol} />
 
 
           <Button type="caution" id="logout-btn" onClick={handleClick}>
@@ -62,21 +51,26 @@ function SidebarAdmin() {
         <hr className="separator" />
 
         <div className="sidebar-options-container">
-          <Link to="/admin">
+
+          <NavLink to="/admin" end className={({isActive}) => isActive ? "selected" : ""}>
             <SidebarOption type="home">Inicio</SidebarOption>
-          </Link>
-          <Link to="/admin/inventario">
+          </NavLink>
+
+          <NavLink to="/admin/inventario" className={({isActive}) => isActive ? "selected" : ""}>
             <SidebarOption type="tables">Inventario</SidebarOption>
-          </Link>
-          <Link to="/admin/usuarios">
+          </NavLink>
+
+          <NavLink to="/admin/usuarios" className={({isActive}) => isActive ? "selected" : ""}>
             <SidebarOption type="user">Usuarios</SidebarOption>
-          </Link>
-          <Link to="/admin/reportes">
+          </NavLink>
+
+          <NavLink to="/admin/reportes" className={({isActive}) => isActive ? "selected" : ""}>
             <SidebarOption type="reports">Reportes</SidebarOption>
-          </Link>
-          <Link to="/admin/ventas">
+          </NavLink>
+
+          <NavLink to="/admin/ventas" className={({isActive}) => isActive ? "selected" : ""}>
             <SidebarOption type="sales">Ventas</SidebarOption>
-          </Link>
+          </NavLink>
         </div>
 
         <hr className="separator" />

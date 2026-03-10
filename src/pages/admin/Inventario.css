@@ -75,6 +75,7 @@
 .form-container input[readonly]{
     background-color: var(--custom-darkblue);
     color: white;
+    
 }
 
 .form-container label{

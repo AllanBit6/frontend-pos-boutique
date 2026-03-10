@@ -1,25 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getMe } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 function ProtectedRoute({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await getMe();
-        setUser(res); // <- aquí
-      } catch {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+  const { user, loading } = useAuth();
 
   if (loading) return <p>Cargando...</p>;
 

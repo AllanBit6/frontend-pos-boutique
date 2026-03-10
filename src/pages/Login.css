@@ -20,11 +20,19 @@
     width: 40%;
     height: 70%;
 }
-.login-form h1{
+
+.login-key-icon{
+    color: var(--custom-green);
+    font-size: 40px;
+    padding:20px
+}
+
+.login-form .login-title{
     color: var(--custom-blue);
     font-size: 30px;
     font-family: var(--third-font);
     font-weight: 600;
+    padding: 20px;
 }
 
 .login-form .login-instructions{

@@ -54,5 +54,6 @@
 
 .table-action-button:hover .table-action-icon{
     color: var(--custom-gray);
-    transition: 0.7s;
+    transition: 0.2s;
+    transform: scale(1.2);
 }

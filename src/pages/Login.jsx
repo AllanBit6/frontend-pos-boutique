@@ -4,8 +4,12 @@ import { useState } from "react";
 import { login } from "../services/authService";
 import "./Login.css"
 
-import {sileo, Toaster} from "sileo";
+import Notification from "../components/Notification";
 
+
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faKey } from "@fortawesome/free-solid-svg-icons";
 
 function Login() {
 
@@ -42,16 +46,13 @@ function Login() {
 
     } catch (err) {
 
-      setError(err.response?.data?.message || "Error al iniciar sesión");
+        
+
+        const message = err.response?.data?.message || "Error al iniciar sesión";
+
+        setError(message);
     }
   };
-
-  sileo.error({
-    title: "Algo salio mal",
-    description: "Pruebo de nuevo luego.",
-  });
-
-
 
   //Render
   return (
@@ -60,13 +61,16 @@ function Login() {
     <div className="login-container">
 
       {error && (
-          <Toaster position="top-center" />
+          <Notification type="error" text={error}/>
       )
       }
       
 
       <form className="login-form" onSubmit={handleLogin}>
-        <h1>INICIO DE SESION</h1>
+        
+        <h1 className="login-title">INICIO DE SESION</h1>
+        <FontAwesomeIcon icon={faKey} className="login-key-icon"/>
+        
 
         <p className="login-instructions">Ingrese sus credenciales para continuar</p>
         

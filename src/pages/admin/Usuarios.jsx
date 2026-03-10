@@ -4,8 +4,8 @@ import SectionHeader from "../../components/SectionHeader";
 import Searchbar from "../../components/Searchbar";
 import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
-import BarcodeCanvas from "./InventarioComponents/BarcodeCanvas";
 import { obtenerUsuariosPorID } from "../../services/usuarioService";
+import { Toaster, sileo } from "sileo";
 
 import { useState } from "react";
 import { useEffect } from "react";
@@ -57,13 +57,30 @@ function Usuarios() {
   //Informacion para la tabla
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchUsuarios = async () => {
-      const usuarios = await obtenerUsuarios();
+useEffect(() => {
+
+  const promise = obtenerUsuarios().then((usuarios) => {
       if (usuarios) setData(usuarios);
-    };
-    fetchUsuarios();
-  }, []);
+    });
+
+    sileo.promise(promise, {
+      loading: {
+        title: "Cargando usuarios",
+        description: "Obteniendo información..."
+      },
+      success: {
+        title: "Usuarios cargados",
+        description: "Datos obtenidos correctamente",
+        duration:1500
+      },
+      error: {
+        title: "Error",
+        description: "No se pudieron cargar los usuarios",
+        duration:1500
+      }
+    });
+
+}, []);
 
 
 
@@ -294,115 +311,62 @@ const openModal = async (type, data = null) => {
         )}
 
         {modalState.type === "detalle" && (
-          <form className="form-container">
+          <form
+            className="form-container"
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.log("Enviar a API:", formData);
+              closeModal();
+            }}
+          >
             <div className="h-row-form">
               <article className="form-left-side">
                 <label>ID</label>
                 <input
                   type="text"
-                  name="ID"
-                  value={formData.ID || ""}
+                  name="id_usuario"
+                  value={formData.id_usuario || ""}
                   readOnly
                 />
 
-                <label>Nombre del producto</label>
+                <label>Nombre</label>
                 <input
                   type="text"
-                  name="Nombre"
-                  value={formData.Nombre || ""}
+                  name="nombre"
+                  value={formData.nombre || ""}
                   readOnly
                 />
 
-                <label>Marca</label>
+                <label>apellido</label>
                 <input
                   type="text"
-                  name="Marca"
-                  value={formData.Marca || ""}
-                  required
+                  name="apellido"
+                  value={formData.apellido || ""}
                   readOnly
                 />
 
-                <div className="h-row-form">
-                  <label>Color</label>
-                  <label>Talla</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="text"
-                    name="Color"
-                    value={formData.Color || ""}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    name="Talla"
-                    value={formData.Talla || ""}
-                    readOnly
-                  />
-                </div>
-
-                <label>Stock</label>
+                <label>user_name</label>
                 <input
-                  type="number"
-                  min={0}
-                  name="Stock"
-                  value={formData.Stock || ""}
+                  type="text"
+                  name="user_name"
+                  value={formData.user_name || ""}
                   readOnly
                 />
 
-                <div className="h-row-form">
-                  <label>Precio compra</label>
-                  <label>Precio venta</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="number"
-                    min={0}
-                    name="PrecioCompra"
-                    value={formData.PrecioCompra || ""}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    min={0}
-                    name="PrecioVenta"
-                    value={formData.PrecioVenta || ""}
-                    readOnly
-                  />
-                </div>
-              </article>
-
-              <article className="form-right-side">
-                <img
-                  src={selectedImage || "#"}
-                  alt=""
-                  className="form-prev-img"
-                />
-
-                <label>Descripcion</label>
-                <textarea
-                  name="Descripcion"
-                  value={formData.Descripcion || ""}
+                <label>Rol</label>        
+                <input
+                  type="text"
+                  name="rolNombre"
+                  value={formData.rolNombre || ""}
                   readOnly
                 />
-                <div>
-                    <BarcodeCanvas productID={modalState.data?.ID} />
-                </div>
+
               </article>
+
             </div>
+
           </form>
         )}
-
-        {modalState.type === "barcode" && (
-          <div>
-            <BarcodeCanvas productID={modalState.data?.ID} />
-          </div>
-        )}
-
         {modalState.type === "eliminar" && (
           <form
             className="form-container"
@@ -417,98 +381,46 @@ const openModal = async (type, data = null) => {
                 <label>ID</label>
                 <input
                   type="text"
-                  name="ID"
-                  value={formData.ID || ""}
+                  name="id_usuario"
+                  value={formData.id_usuario || ""}
                   readOnly
                 />
 
-                <label>Nombre del producto</label>
+                <label>Nombre</label>
                 <input
                   type="text"
-                  name="Nombre"
-                  value={formData.Nombre || ""}
+                  name="nombre"
+                  value={formData.nombre || ""}
                   readOnly
                 />
 
-                <label>Marca</label>
+                <label>apellido</label>
                 <input
                   type="text"
-                  name="Marca"
-                  value={formData.Marca || ""}
-                  required
+                  name="apellido"
+                  value={formData.apellido || ""}
                   readOnly
                 />
 
-                <div className="h-row-form">
-                  <label>Color</label>
-                  <label>Talla</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="text"
-                    name="Color"
-                    value={formData.Color || ""}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    name="Talla"
-                    value={formData.Talla || ""}
-                    readOnly
-                  />
-                </div>
-
-                <label>Stock</label>
+                <label>user_name</label>
                 <input
-                  type="number"
-                  min={0}
-                  name="Stock"
-                  value={formData.Stock || ""}
+                  type="text"
+                  name="user_name"
+                  value={formData.user_name || ""}
                   readOnly
                 />
 
-                <div className="h-row-form">
-                  <label>Precio compra</label>
-                  <label>Precio venta</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="number"
-                    min={0}
-                    name="PrecioCompra"
-                    value={formData.PrecioCompra || ""}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    min={0}
-                    name="PrecioVenta"
-                    value={formData.PrecioVenta || ""}
-                    readOnly
-                  />
-                </div>
-              </article>
-
-              <article className="form-right-side">
-                <img
-                  src={selectedImage || "#"}
-                  alt=""
-                  className="form-prev-img"
-                />
-
-                <label>Descripcion</label>
-                <textarea
-                  name="Descripcion"
-                  value={formData.Descripcion || ""}
+                <label>Rol</label>        
+                <input
+                  type="text"
+                  name="rolNombre"
+                  value={formData.rolNombre || ""}
                   readOnly
                 />
+
               </article>
+
             </div>
-
             <button type="submit" className="btn-light caution">
               Eliminar
             </button>

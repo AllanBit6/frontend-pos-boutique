@@ -1,6 +1,6 @@
 import "./AdminLayout.css";
-import SectionHeader from "../components/SectionHeader";
-import Searchbar from "../components/Searchbar";
+import SectionHeader from "../../components/SectionHeader";
+import Searchbar from "../../components/Searchbar";
 
 function AdminLayout({
   title,

@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { useState } from "react";
 import { login } from "../services/authService";
 import "./Login.css"
+import { useAuth } from "../context/AuthContext";
 
 import Notification from "../components/Notification";
 
@@ -13,7 +14,7 @@ import { faKey } from "@fortawesome/free-solid-svg-icons";
 
 function Login() {
 
-  
+  const { checkAuth } = useAuth();
   const navigate = useNavigate(); //Para redirigir segun el tipo de usuario
   const [error, setError] = useState(""); //Captura el error
 
@@ -33,26 +34,28 @@ function Login() {
     }));
   };
   //Para ejecutar el login
-  const handleLogin = async (e) => {
-      e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
-    //Se leen los datos de la respuesta y se accede al usuario y rol
+  try {
+
     const res = await login(formData.user_name, formData.password);
+
+    // sincroniza el contexto
+    await checkAuth();
 
     if (res.usuario.rol === "administrador") {
       navigate("/admin");
     }
 
-    } catch (err) {
+  } catch (err) {
 
-        
+    const message =
+      err.response?.data?.message || "Error al iniciar sesión";
 
-        const message = err.response?.data?.message || "Error al iniciar sesión";
-
-        setError(message);
-    }
-  };
+    setError(message);
+  }
+};
 
   //Render
   return (

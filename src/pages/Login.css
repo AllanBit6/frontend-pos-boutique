@@ -28,7 +28,7 @@
 }
 
 .login-form .login-instructions{
-    color: var(--custom-blue);
+    color: black;
     font-size: 13px;
     font-family: var(--secondary-font);
     font-weight: 600;

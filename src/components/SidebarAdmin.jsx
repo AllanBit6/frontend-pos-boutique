@@ -13,10 +13,8 @@ function SidebarAdmin() {
   const navigate = useNavigate();
   const [sidebarCollapse, setSidebarCollapse] = useState("nav-bar");
 
-
+  //Toggle para esconder la barra
   function handleClickBar(){
-    console.log("si toque")
-
     if(sidebarCollapse === "nav-bar"){
       setSidebarCollapse("nav-bar collapsed");
     }else{

@@ -23,6 +23,7 @@ const columns = [
   "Talla",
   "Stock",
   "PrecioVenta",
+  "PrecioCompra"
 ];
 
 

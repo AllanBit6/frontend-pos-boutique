@@ -19,13 +19,12 @@ function Inicio(){
                     <DashboardCard color="yellow" icon="sales">VENTAS</DashboardCard>
                 </Link>
                 
-
+                {/*
                 <DashboardCard color="gray" icon="">NA</DashboardCard>
                 <DashboardCard color="gray" icon="">NA</DashboardCard>
                 <DashboardCard color="gray" icon="">NA</DashboardCard>
                 <DashboardCard color="gray" icon="">NA</DashboardCard>
-                
-                
+                */}   
             </div>
 
 

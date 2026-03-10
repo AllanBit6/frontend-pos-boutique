@@ -2,9 +2,12 @@ import AdminLayout from "./AdminLayout";
 import DataTable from "../../components/DataTable";
 import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
+import UserForm from "./UsuariosComponents/UserForm";
+import UserDetail from "./UsuariosComponents/UserDetail";
+import UserDelete from "./UsuariosComponents/UserDelete";
+
 import { obtenerUsuariosPorID } from "../../services/usuarioService";
 import {sileo } from "sileo";
-
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -88,16 +91,6 @@ useEffect(() => {
   //Estado para setear la info del usuario por fila
   const [formData, setFormData] = useState({});
 
-  //Funcion para recoger la info de la fila y mandarla al formulario
-  const handleChange = (e) => {
-
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-
   
   //Mapeo de acciones por modal
 const openModal = async (type, data = null) => {
@@ -131,16 +124,7 @@ const openModal = async (type, data = null) => {
       data: null,
     });
 
-    setSelectedImage(null);
   };
-
-  //Estado para cambiar la imagen de previsualizacion
-  const [selectedImage, setSelectedImage] = useState(null);
-
-
-
-
-
 
 
 
@@ -163,253 +147,27 @@ const openModal = async (type, data = null) => {
       
       <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Usuarios">
         {modalState.type === "agregar" && (
-          <form
-            className="form-container"
-            onSubmit={(e) => {
-              e.preventDefault();
-              
-              //Enviar a API  
-
-              closeModal();
-            }}
-          >
-            <div className="h-row-form">
-              <article className="form-left-side">
-                <label>Nombre del Usuario</label>
-                <input type="text" required />
-                <label>Apellido</label>
-                <input type="text" required />
-                <label>Nombre de usuario</label>
-                <input type="text" required />
-
-                <label>Rol</label>
-                <select required>
-                  <option value="">Administrador</option>
-                  <option value="">Vendedor</option>
-                </select>
-
-              </article>
-              <article className="form-right-side">
-                <img
-                  src={selectedImage || "#"}
-                  alt=""
-                  className="form-prev-img"
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) setSelectedImage(URL.createObjectURL(file));
-                  }}
-                />
-
-              </article>
-            </div>
-
-            <button type="submit" className="btn-light accept">
-              Guardar
-            </button>
-          </form>
+          <UserForm mode="create"
+          formData={formData}
+          setFormData={setFormData}
+          closeModal={closeModal}  
+          />  
         )}
 
         {modalState.type === "editar" && (
-          <form
-            className="form-container"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log("Enviar a API:", formData);
-              closeModal();
-            }}
-          >
-            <div className="h-row-form">
-              <article className="form-left-side">
-                <label>ID</label>
-                <input
-                  type="text"
-                  name="id_usuario"
-                  value={formData.id_usuario || ""}
-                  readOnly
-                />
-
-                <label>Nombre</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  value={formData.nombre || ""}
-                  onChange={handleChange}
-                  required
-                />
-
-                <label>apellido</label>
-                <input
-                  type="text"
-                  name="apellido"
-                  value={formData.apellido || ""}
-                  onChange={handleChange}
-                  required
-                />
-
-                <label>user_name</label>
-                <input
-                  type="text"
-                  name="user_name"
-                  value={formData.user_name || ""}
-                  onChange={handleChange}
-                  required
-                />
-
-                <label>Rol</label>        
-                <input
-                  type="text"
-                  name="rolNombre"
-                  value={formData.rolNombre || ""}
-                  onChange={handleChange}
-                  required
-                />
-
-              </article>
-
-              <article className="form-right-side">
-                <img
-                  src={selectedImage || "#"}
-                  alt=""
-                  className="form-prev-img"
-                />
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) setSelectedImage(URL.createObjectURL(file));
-                  }}
-                />
-
-              </article>
-            </div>
-
-            <button type="submit" className="btn-light accept">
-              Guardar
-            </button>
-          </form>
+          <UserForm mode="edit"
+          formData={formData}
+          setFormData={setFormData}
+          closeModal={closeModal}  
+          />
         )}
 
         {modalState.type === "detalle" && (
-          <form
-            className="form-container"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log("Enviar a API:", formData);
-              closeModal();
-            }}
-          >
-            <div className="h-row-form">
-              <article className="form-left-side">
-                <label>ID</label>
-                <input
-                  type="text"
-                  name="id_usuario"
-                  value={formData.id_usuario || ""}
-                  readOnly
-                />
-
-                <label>Nombre</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  value={formData.nombre || ""}
-                  readOnly
-                />
-
-                <label>apellido</label>
-                <input
-                  type="text"
-                  name="apellido"
-                  value={formData.apellido || ""}
-                  readOnly
-                />
-
-                <label>user_name</label>
-                <input
-                  type="text"
-                  name="user_name"
-                  value={formData.user_name || ""}
-                  readOnly
-                />
-
-                <label>Rol</label>        
-                <input
-                  type="text"
-                  name="rolNombre"
-                  value={formData.rolNombre || ""}
-                  readOnly
-                />
-
-              </article>
-
-            </div>
-
-          </form>
+          <UserDetail formData={formData}/>
         )}
         {modalState.type === "eliminar" && (
-          <form
-            className="form-container"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log("Enviar a API:", formData);
-              closeModal();
-            }}
-          >
-            <div className="h-row-form">
-              <article className="form-left-side">
-                <label>ID</label>
-                <input
-                  type="text"
-                  name="id_usuario"
-                  value={formData.id_usuario || ""}
-                  readOnly
-                />
-
-                <label>Nombre</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  value={formData.nombre || ""}
-                  readOnly
-                />
-
-                <label>apellido</label>
-                <input
-                  type="text"
-                  name="apellido"
-                  value={formData.apellido || ""}
-                  readOnly
-                />
-
-                <label>user_name</label>
-                <input
-                  type="text"
-                  name="user_name"
-                  value={formData.user_name || ""}
-                  readOnly
-                />
-
-                <label>Rol</label>        
-                <input
-                  type="text"
-                  name="rolNombre"
-                  value={formData.rolNombre || ""}
-                  readOnly
-                />
-
-              </article>
-
-            </div>
-            <button type="submit" className="btn-light caution">
-              Eliminar
-            </button>
-          </form>
+          <UserDelete formData={formData}
+          closeModal={closeModal}/>
         )}
       </Modal>
     </AdminLayout>

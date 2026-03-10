@@ -3,13 +3,26 @@ import Profile from "./Profile"
 import Button from "./Button"
 import SidebarOption from "./SidebarOption"
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout, getMe } from "../services/authService";
+import SidebarCommander from "./SidebarCommander";
 
 function SidebarAdmin() {
   const [userData, setUserData] = useState({ username: "", role: "" });
   const navigate = useNavigate();
+  const [sidebarCollapse, setSidebarCollapse] = useState("nav-bar");
+
+
+  function handleClickBar(){
+    console.log("si toque")
+
+    if(sidebarCollapse === "nav-bar"){
+      setSidebarCollapse("nav-bar collapsed");
+    }else{
+      setSidebarCollapse("nav-bar");
+    }
+  }
 
   // Obtener datos del usuario al montar el componente
   useEffect(() => {
@@ -38,37 +51,41 @@ function SidebarAdmin() {
   }
 
   return (
-    <nav className="nav-bar">
-      {/* Pasamos los datos del usuario desde el state */}
-      <Profile username={userData.username} role={userData.role} />
+    <Fragment>
+      <nav className={sidebarCollapse}>
+        {/* Pasamos los datos del usuario desde el state */}
+        <Profile username={userData.username} role={userData.role} />
 
 
-        <Button type="caution" id="logout-btn" onClick={handleClick}>
-          Cerrar Sesión
-        </Button>
+          <Button type="caution" id="logout-btn" onClick={handleClick}>
+            Cerrar Sesión
+          </Button>
 
-      <hr className="separator" />
+        <hr className="separator" />
 
-      <div className="sidebar-options-container">
-        <Link to="/admin">
-          <SidebarOption type="home">Inicio</SidebarOption>
-        </Link>
-        <Link to="/admin/inventario">
-          <SidebarOption type="tables">Inventario</SidebarOption>
-        </Link>
-        <Link to="/admin/usuarios">
-          <SidebarOption type="user">Usuarios</SidebarOption>
-        </Link>
-        <Link to="/admin/reportes">
-          <SidebarOption type="reports">Reportes</SidebarOption>
-        </Link>
-        <Link to="/admin/ventas">
-          <SidebarOption type="sales">Ventas</SidebarOption>
-        </Link>
-      </div>
+        <div className="sidebar-options-container">
+          <Link to="/admin">
+            <SidebarOption type="home">Inicio</SidebarOption>
+          </Link>
+          <Link to="/admin/inventario">
+            <SidebarOption type="tables">Inventario</SidebarOption>
+          </Link>
+          <Link to="/admin/usuarios">
+            <SidebarOption type="user">Usuarios</SidebarOption>
+          </Link>
+          <Link to="/admin/reportes">
+            <SidebarOption type="reports">Reportes</SidebarOption>
+          </Link>
+          <Link to="/admin/ventas">
+            <SidebarOption type="sales">Ventas</SidebarOption>
+          </Link>
+        </div>
 
-      <hr className="separator" />
-    </nav>
+        <hr className="separator" />
+      </nav>
+      <SidebarCommander onClick={handleClickBar}/>  
+
+   </Fragment> 
   );
 }
 

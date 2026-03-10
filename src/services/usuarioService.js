@@ -13,3 +13,13 @@ export const obtenerUsuarios = async () => {
     }
     
 }
+
+export const obtenerUsuariosPorID = async(id) => {
+
+    try{
+        const res = await axios.get(`${API}/api/v1/usuarios/${id}`, {withCredentials:true});
+        return res.data;
+    }catch(error){
+        console.log(error)
+    }
+}

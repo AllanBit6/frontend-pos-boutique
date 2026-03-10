@@ -5,6 +5,7 @@ import Searchbar from "../../components/Searchbar";
 import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
 import BarcodeCanvas from "./InventarioComponents/BarcodeCanvas";
+import { obtenerUsuariosPorID } from "../../services/usuarioService";
 
 import { useState } from "react";
 import { useEffect } from "react";
@@ -65,35 +66,52 @@ function Usuarios() {
   }, []);
 
 
+
+
+
   //Estado para controlar el despliegue del Modal
   const [modalState, setModalState] = useState({
     isOpen: false,
     type: null,
     data: null,
   });
-  //Estado para setear la info del producto por fila
+  //Estado para setear la info del usuario por fila
   const [formData, setFormData] = useState({});
 
   //Funcion para recoger la info de la fila y mandarla al formulario
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  //Mapeo de acciones por modal
-  const openModal = (type, data = null) => {
-    setModalState({
-      isOpen: true,
-      type,
-      data,
-    });
 
-    if (data) {
-      setFormData(data);
+  
+  //Mapeo de acciones por modal
+const openModal = async (type, data = null) => {
+  setModalState({
+    isOpen: true,
+    type,
+    data,
+  });
+
+  if ((type === "editar" || type === "detalle" || type === "eliminar") && data?.id_usuario) {
+    try {
+      //Obtiene el IDe desde la tabla
+      const usuarioCompleto = await obtenerUsuariosPorID(data.id_usuario);
+      setFormData({
+                ...usuarioCompleto,
+                rolNombre: usuarioCompleto.rol?.nombre || "", // aplanado
+                }); // llena el formulario, aplnando el rol
+    } catch (error) {
+      console.error("No se pudo cargar el usuario:", error);
     }
-  };
+  }
+};
+
+
 
   const closeModal = () => {
     setModalState({
@@ -141,42 +159,33 @@ function Usuarios() {
 
       </div>
 
-      <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Productos">
+      <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Usuarios">
         {modalState.type === "agregar" && (
           <form
             className="form-container"
             onSubmit={(e) => {
               e.preventDefault();
-              console.log("Enviar a API");
+              
+              //Enviar a API  
+
               closeModal();
             }}
           >
             <div className="h-row-form">
               <article className="form-left-side">
-                <label>Nombre del producto</label>
+                <label>Nombre del Usuario</label>
                 <input type="text" required />
-                <label>Marca</label>
+                <label>Apellido</label>
                 <input type="text" required />
-                <div className="h-row-form">
-                  <label>Color</label>
-                  <label>Talla</label>
-                </div>
-                <div className="h-row-form">
-                  <input type="text" />
-                  <input type="number" min={0} />
-                </div>
+                <label>Nombre de usuario</label>
+                <input type="text" required />
 
-                <label>Stock</label>
-                <input type="number" min={0} />
+                <label>Rol</label>
+                <select required>
+                  <option value="">Administrador</option>
+                  <option value="">Vendedor</option>
+                </select>
 
-                <div className="h-row-form">
-                  <label>Precio compra</label>
-                  <label>Precio venta</label>
-                </div>
-                <div className="h-row-form">
-                  <input type="number" min={0} />
-                  <input type="number" min={0} />
-                </div>
               </article>
               <article className="form-right-side">
                 <img
@@ -193,8 +202,6 @@ function Usuarios() {
                   }}
                 />
 
-                <label>Descripcion</label>
-                <textarea></textarea>
               </article>
             </div>
 
@@ -218,81 +225,47 @@ function Usuarios() {
                 <label>ID</label>
                 <input
                   type="text"
-                  name="ID"
-                  value={formData.ID || ""}
+                  name="id_usuario"
+                  value={formData.id_usuario || ""}
                   readOnly
                 />
 
-                <label>Nombre del producto</label>
+                <label>Nombre</label>
                 <input
                   type="text"
-                  name="Nombre"
-                  value={formData.Nombre || ""}
+                  name="nombre"
+                  value={formData.nombre || ""}
                   onChange={handleChange}
                   required
                 />
 
-                <label>Marca</label>
+                <label>apellido</label>
                 <input
                   type="text"
-                  name="Marca"
-                  value={formData.Marca || ""}
+                  name="apellido"
+                  value={formData.apellido || ""}
                   onChange={handleChange}
                   required
                 />
 
-                <div className="h-row-form">
-                  <label>Color</label>
-                  <label>Talla</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="text"
-                    name="Color"
-                    value={formData.Color || ""}
-                    onChange={handleChange}
-                  />
-
-                  <input
-                    type="text"
-                    name="Talla"
-                    value={formData.Talla || ""}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <label>Stock</label>
+                <label>user_name</label>
                 <input
-                  type="number"
-                  min={0}
-                  name="Stock"
-                  value={formData.Stock || ""}
+                  type="text"
+                  name="user_name"
+                  value={formData.user_name || ""}
                   onChange={handleChange}
+                  required
                 />
 
-                <div className="h-row-form">
-                  <label>Precio compra</label>
-                  <label>Precio venta</label>
-                </div>
+                <label>Rol</label>        
+                <input
+                  type="text"
+                  name="rolNombre"
+                  value={formData.rolNombre || ""}
+                  onChange={handleChange}
+                  required
+                />
 
-                <div className="h-row-form">
-                  <input
-                    type="number"
-                    min={0}
-                    name="PrecioCompra"
-                    value={formData.PrecioCompra || ""}
-                    onChange={handleChange}
-                  />
-
-                  <input
-                    type="text"
-                    min={0}
-                    name="PrecioVenta"
-                    value={formData.PrecioVenta || ""}
-                    onChange={handleChange}
-                  />
-                </div>
               </article>
 
               <article className="form-right-side">
@@ -311,12 +284,6 @@ function Usuarios() {
                   }}
                 />
 
-                <label>Descripcion</label>
-                <textarea
-                  name="Descripcion"
-                  value={formData.Descripcion || ""}
-                  onChange={handleChange}
-                />
               </article>
             </div>
 

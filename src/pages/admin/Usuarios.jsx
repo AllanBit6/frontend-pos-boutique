@@ -1,11 +1,9 @@
-import "./AdminLayout.css";
+import AdminLayout from "./AdminLayout";
 import DataTable from "../../components/DataTable";
-import SectionHeader from "../../components/SectionHeader";
-import Searchbar from "../../components/Searchbar";
 import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
 import { obtenerUsuariosPorID } from "../../services/usuarioService";
-import { Toaster, sileo } from "sileo";
+import {sileo } from "sileo";
 
 import { useState } from "react";
 import { useEffect } from "react";
@@ -53,15 +51,12 @@ function Usuarios() {
     },
   ];
 
-
   //Informacion para la tabla
   const [data, setData] = useState([]);
 
 useEffect(() => {
 
-  const promise = obtenerUsuarios().then((usuarios) => {
-      if (usuarios) setData(usuarios);
-    });
+  const promise = obtenerUsuarios().then(setData);
 
     sileo.promise(promise, {
       loading: {
@@ -81,8 +76,6 @@ useEffect(() => {
     });
 
 }, []);
-
-
 
 
 
@@ -113,6 +106,7 @@ const openModal = async (type, data = null) => {
     type,
     data,
   });
+
 
   if ((type === "editar" || type === "detalle" || type === "eliminar") && data?.id_usuario) {
     try {
@@ -153,29 +147,20 @@ const openModal = async (type, data = null) => {
 
   //Regreso del render
   return (
-    <div className="admin-layout-wrapper">
-      <SectionHeader>USUARIOS</SectionHeader>
 
-      <Searchbar />
+    <AdminLayout title="USUARIOS" actions={
+      <ButtonLight type="accept" onClick={() => openModal("agregar")}>
+          Registrar nuevo
+        </ButtonLight>
+    }>
 
-      <div className="admin-layout-table">
-        <div className="admin-tables">
-          <DataTable
+      <DataTable
             columns={columns}
             data={data}
             actions={actions}
             iconMap={iconMap}
           />
-        </div>
-      </div>
-
-      <div className="admin-actions">
-        <ButtonLight type="accept" onClick={() => openModal("agregar")}>
-          Registrar nuevo
-        </ButtonLight>
-
-      </div>
-
+      
       <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Usuarios">
         {modalState.type === "agregar" && (
           <form
@@ -427,7 +412,9 @@ const openModal = async (type, data = null) => {
           </form>
         )}
       </Modal>
-    </div>
+    </AdminLayout>
+
+    
   );
 }
 

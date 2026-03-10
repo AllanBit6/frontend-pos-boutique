@@ -1,4 +1,4 @@
-import "./Inventario.css";
+import "./AdminLayout.css";
 import DataTable from "../../components/DataTable";
 import SectionHeader from "../../components/SectionHeader";
 import Searchbar from "../../components/Searchbar";
@@ -153,13 +153,13 @@ const openModal = async (type, data = null) => {
 
   //Regreso del render
   return (
-    <div className="inventario-wrapper">
+    <div className="admin-layout-wrapper">
       <SectionHeader>USUARIOS</SectionHeader>
 
       <Searchbar />
 
-      <div className="inventario-table">
-        <div className="products-tables">
+      <div className="admin-layout-table">
+        <div className="admin-tables">
           <DataTable
             columns={columns}
             data={data}
@@ -169,7 +169,7 @@ const openModal = async (type, data = null) => {
         </div>
       </div>
 
-      <div className="operations-wrapper">
+      <div className="admin-actions">
         <ButtonLight type="accept" onClick={() => openModal("agregar")}>
           Registrar nuevo
         </ButtonLight>

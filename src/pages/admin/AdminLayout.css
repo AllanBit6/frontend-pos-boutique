@@ -1,8 +1,8 @@
-.inventario-wrapper{
+.admin-layout-wrapper{
     flex-direction: column;
 }
 
-.inventario-table{
+.admin-layout-table{
     display: flex;
     flex-direction: column;
     background-color: var(--custom-gray);
@@ -15,7 +15,7 @@
 
 }
 
-.operations-wrapper{
+.admin-actions{
     display: flex;
     flex-direction: row;
     gap: 20px;

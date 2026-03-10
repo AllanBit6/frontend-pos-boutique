@@ -1,7 +1,6 @@
 import "./AdminLayout.css";
 import DataTable from "../../components/DataTable";
-import SectionHeader from "../../components/SectionHeader";
-import Searchbar from "../../components/Searchbar";
+import AdminLayout from "./AdminLayout";
 import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
 import BarcodeCanvas from "./InventarioComponents/BarcodeCanvas";
@@ -129,34 +128,26 @@ function Inventario() {
 
 
 
-
+  const adminActions = (
+    <>
+    <ButtonLight type="accept" onClick={() => openModal("agregar")}>
+          Registrar nuevo
+        </ButtonLight>
+        <ButtonLight type="default">Gestionar tallas</ButtonLight>
+        <ButtonLight type="default">Gestionar tallas</ButtonLight>
+    </>
+  )
 
   //Regreso del render
   return (
-    <div className="admin-layout-wrapper">
-      <SectionHeader>INVENTARIO</SectionHeader>
 
-      <Searchbar />
-
-      <div className="admin-layout-table">
-        <div className="admin-tables">
-          <DataTable
+    <AdminLayout title="INVENTARIO" actions={adminActions}>
+      <DataTable
             columns={columns}
             data={data}
             actions={actions}
             iconMap={iconMap}
           />
-        </div>
-      </div>
-
-      <div className="admin-actions">
-        <ButtonLight type="accept" onClick={() => openModal("agregar")}>
-          Registrar nuevo
-        </ButtonLight>
-        <ButtonLight type="default">Gestionar tallas</ButtonLight>
-        <ButtonLight type="default">Gestionar tallas</ButtonLight>
-      </div>
-
       <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Productos">
         {modalState.type === "agregar" && (
           <form
@@ -564,7 +555,10 @@ function Inventario() {
           </form>
         )}
       </Modal>
-    </div>
+    </AdminLayout>
+
+      
+    
   );
 }
 

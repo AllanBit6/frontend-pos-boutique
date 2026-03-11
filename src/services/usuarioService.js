@@ -8,10 +8,21 @@ export const obtenerUsuarios = async () => {
         const res = await axios.get(`${API}/api/v1/usuarios`, {withCredentials:true})
         return res.data;
     }catch(error){
-        console.log(error)
+        console.log(error);
     }
     
 }
+
+export const crearUsuario = async (new_user) => {
+    try{
+        const res = await axios.post(`${API}/api/v1/usuarios`, new_user, {withCredentials:true})
+        return res.data;
+    }catch(error){
+        console.error("Error creando usuario:", error.response?.data || error.message);
+        throw error;
+    }
+}
+
 
 export const obtenerUsuariosPorID = async(id) => {
 

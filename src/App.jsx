@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Cashier from "./pages/Cashier";
+import ChangePassword from "./pages/ChangePassword";
 
 import Reportes from "./pages/admin/Reportes";
 import Usuarios from "./pages/admin/Usuarios";
@@ -19,14 +20,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element = {<Login/>} />
-
-
+        <Route path="/cambiar-password" element = {<ChangePassword/>}/>
 
         <Route path="/admin" element = {
           <ProtectedRoute>
             <Admin/>
-          </ProtectedRoute>
-          
+          </ProtectedRoute> 
           }>
 
             <Route index element={<Inicio/>}/>
@@ -37,10 +36,14 @@ function App() {
           
           
         </Route>
-
-
-
-        <Route path="/cashier" element = {<Cashier/>} />
+          
+        <Route path="/cashier" element = {
+          <ProtectedRoute>
+            <Cashier/>
+          </ProtectedRoute>
+          } >
+            
+        </Route>
 
       </Routes>
     

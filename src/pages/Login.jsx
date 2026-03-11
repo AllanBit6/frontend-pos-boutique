@@ -7,8 +7,6 @@ import { useAuth } from "../context/AuthContext";
 
 import Notification from "../components/Notification";
 
-
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 
@@ -33,7 +31,10 @@ function Login() {
       [name]: value
     }));
   };
-  //Para ejecutar el login
+
+
+
+//Para ejecutar el login
 const handleLogin = async (e) => {
   e.preventDefault();
 
@@ -46,6 +47,8 @@ const handleLogin = async (e) => {
 
     if (res.usuario.rol === "administrador") {
       navigate("/admin");
+    }else if(res.usuario.rol === "vendedor"){
+      navigate("/cashier");
     }
 
   } catch (err) {
@@ -83,6 +86,7 @@ const handleLogin = async (e) => {
               name="user_name"
               id="username-input"
               value={formData.user_name}
+              required
               onChange={handleChange}
             />
 
@@ -92,6 +96,7 @@ const handleLogin = async (e) => {
               name="password"
               id="password-input"
               value={formData.password}
+              required
               onChange={handleChange}
             />
 

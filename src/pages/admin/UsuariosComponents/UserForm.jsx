@@ -1,28 +1,41 @@
 import { useState } from "react";
 import "./UserForm.css";
+import { crearUsuario } from "../../../services/usuarioService";
 
 function UserForm({ mode, formData, setFormData, closeModal }) {
 
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
 
     if (mode === "create") {
-      console.log("Crear usuario", formData);
+
+      await crearUsuario(formData);
+
     } else {
+
       console.log("Editar usuario", formData);
+
     }
 
     closeModal();
-  };
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>
@@ -69,16 +82,26 @@ function UserForm({ mode, formData, setFormData, closeModal }) {
             required
           />
 
+          <label>Contraseña</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password || ""}
+            onChange={handleChange}
+            required
+          />
+
           <label>Rol</label>
           <select
-            name="rolNombre"
-            value={formData.rolNombre || ""}
+            name="rol_id"
+            value={formData.rol_id || ""}
             onChange={handleChange}
             required
           >
             <option value="">Seleccione rol</option>
-            <option value="Administrador">Administrador</option>
-            <option value="Vendedor">Vendedor</option>
+            <option value="seed-admin-rol">Administrador</option>
+            <option value="seed-bodeguero-rol">Bodeguero</option>
+            <option value="seed-vendedor-rol">Vendedor</option>
           </select>
 
         </article>

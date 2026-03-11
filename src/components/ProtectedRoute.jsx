@@ -9,6 +9,8 @@ function ProtectedRoute({ children }) {
 
   if (!user) return <Navigate to="/login" replace />;
 
+  if(user.primer_login) return <Navigate to="/cambiar-password"/>;
+
   return children;
 }
 

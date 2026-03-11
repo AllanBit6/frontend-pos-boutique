@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./UserForm.css";
-import { crearUsuario } from "../../../services/usuarioService";
+import { crearUsuario, actualizarUsuario } from "../../../services/usuarioService";
+import { sileo } from "sileo";
 
 function UserForm({ mode, formData, setFormData, closeModal }) {
 
@@ -18,15 +19,66 @@ function UserForm({ mode, formData, setFormData, closeModal }) {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+  const { 
+    id_usuario,
+    nombre,
+    apellido,
+    user_name,
+    password,
+    rol_id
+  } = formData;
+
+  const userData = {
+    nombre,
+    apellido,
+    user_name,
+    password,
+    rol_id
+  };
+
   try {
 
     if (mode === "create") {
 
-      await crearUsuario(formData);
+      const promise = crearUsuario(userData);
+
+      await sileo.promise(promise, {
+        loading: {
+          title: "Creando usuario",
+          description: "Guardando información..."
+        },
+        success: {
+          title: "Usuario creado",
+          description: "El usuario se registró correctamente",
+          duration: 1500
+        },
+        error: {
+          title: "Error",
+          description: "No se pudo crear el usuario",
+          duration: 1500
+        }
+      });
 
     } else {
 
-      console.log("Editar usuario", formData);
+      const promise = actualizarUsuario(userData, id_usuario);
+
+      await sileo.promise(promise, {
+        loading: {
+          title: "Actualizando usuario",
+          description: "Guardando cambios..."
+        },
+        success: {
+          title: "Usuario actualizado",
+          description: "Los cambios se guardaron correctamente",
+          duration: 1500
+        },
+        error: {
+          title: "Error",
+          description: "No se pudo actualizar el usuario",
+          duration: 1500
+        }
+      });
 
     }
 
@@ -36,6 +88,9 @@ const handleSubmit = async (e) => {
     console.error(error);
   }
 };
+
+
+
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>

@@ -23,6 +23,17 @@ export const crearUsuario = async (new_user) => {
     }
 }
 
+export const actualizarUsuario = async (user, id) => {
+    try{
+        const res = await axios.patch(`${API}/api/v1/usuarios/${id}`,user, {withCredentials:true})
+        return res.data;
+    }catch(error){
+        console.error("Error actualizando usuario:", error.response?.data || error.message);
+        throw error;   
+    }
+
+}
+
 
 export const obtenerUsuariosPorID = async(id) => {
 

@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const isDev = !app.isPackaged; // true si estás en dev
+const isDev = !app.isPackaged; //True para DEV
 const isMac = os.platform() === 'darwin';
 
 function createWindow() {
@@ -21,11 +21,11 @@ function createWindow() {
   });
 
   if (isDev) {
-    // ⚡ Aquí cargamos el dev server de Vite
+    //Acople con VITE
     win.loadURL('http://localhost:5173');
     win.webContents.openDevTools();
   } else {
-    // En build empaquetado cargamos el HTML generado por Vite
+    //Se carga el HTML que da VITE
     win.loadFile(path.join(__dirname, 'dist/index.html'));
   }
 }

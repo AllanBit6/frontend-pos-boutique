@@ -63,51 +63,54 @@ const handleLogin = async (e) => {
   //Render
   return (
 
-    
-    <div className="login-container">
+    <div className="login-card-wrapper">
+      <div className="login-container">
 
-      {error && (
-          <Notification type="error" text={error}/>
-      )
-      }
+        {error && (
+            <Notification type="error" text={error}/>
+        )
+        }
+        
+
+        <form className="login-form" onSubmit={handleLogin}>
+          
+          <h1 className="login-title">INICIO DE SESION</h1>
+          <FontAwesomeIcon icon={faKey} className="login-key-icon"/>
+                    
+          <label htmlFor="">Nombre de usuario</label>
+          <input
+                type="text"
+                name="user_name"
+                id="username-input"
+                value={formData.user_name}
+                required
+                onChange={handleChange}
+              />
+
+          <label htmlFor="" >Contraseña</label>
+          <input
+                type="password"
+                name="password"
+                id="password-input"
+                value={formData.password}
+                required
+                onChange={handleChange}
+              />
+
+
+          <Button type="accept">Ingresar</Button>
+
+        </form>
+
+        <div className="login-flyer">
+          <h1>WELCOME!</h1>
+        </div>
+        
+
+      </div>
       
-
-      <form className="login-form" onSubmit={handleLogin}>
-        
-        <h1 className="login-title">INICIO DE SESION</h1>
-        <FontAwesomeIcon icon={faKey} className="login-key-icon"/>
-        
-
-        <p className="login-instructions">Ingrese sus credenciales para continuar</p>
-        
-        <label htmlFor="">Nombre de usuario</label>
-        <input
-              type="text"
-              name="user_name"
-              id="username-input"
-              value={formData.user_name}
-              required
-              onChange={handleChange}
-            />
-
-        <label htmlFor="" >Contraseña</label>
-        <input
-              type="password"
-              name="password"
-              id="password-input"
-              value={formData.password}
-              required
-              onChange={handleChange}
-            />
-
-
-        <Button type="accept">Ingresar</Button>
-
-      </form>
-
-      <hr/>
-
     </div>
+    
   );
 }
 

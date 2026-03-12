@@ -68,7 +68,7 @@ function ChangePassword(){
           type="password"
           name="password_actual"
           value={formData.password_actual}
-          className="password-input"
+          className="password-input-change"
           onChange={handleChange}
         />
 
@@ -78,7 +78,7 @@ function ChangePassword(){
           name="password_nuevo"
           value={formData.password_nuevo}
           onChange={handleChange}
-          className="password-input"
+          className="password-input-change"
         />
 
         <Button type="accept">Cambiar contraseña</Button>

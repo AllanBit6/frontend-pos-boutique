@@ -1,5 +1,17 @@
 .admin-layout-wrapper{
     flex-direction: column;
+    animation: sectionEntry 0.5s ease;
+}
+
+@keyframes sectionEntry{
+    from{
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .admin-layout-table{

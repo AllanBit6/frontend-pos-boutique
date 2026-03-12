@@ -5,6 +5,7 @@ import Modal from "../../components/Modal";
 import UserForm from "./UsuariosComponents/UserForm";
 import UserDetail from "./UsuariosComponents/UserDetail";
 import UserDelete from "./UsuariosComponents/UserDelete";
+import UserReset from "./UsuariosComponents/UserReset";
 
 import { obtenerUsuariosPorID } from "../../services/usuarioService";
 import {sileo } from "sileo";
@@ -15,6 +16,7 @@ import {
   faPencil,
   faTrash,
   faCircleInfo,
+  faUnlockKeyhole,
 } from "@fortawesome/free-solid-svg-icons";
 import { obtenerUsuarios } from "../../services/usuarioService";
 
@@ -26,6 +28,7 @@ const columns = [
   "nombre",
   "apellido",
   "user_name",
+  "createdAt"
 ];
 
 
@@ -35,6 +38,7 @@ const iconMap = {
   pencil: faPencil,
   trash: faTrash,
   info: faCircleInfo,
+  password: faUnlockKeyhole,
 };
 
 function Usuarios() {
@@ -51,6 +55,10 @@ function Usuarios() {
     {
       icon: "info",
       onClick: (item) => openModal("detalle", item),
+    },
+    {
+      icon: "password",
+      onClick: (item) => openModal("reseteo", item),
     },
   ];
 
@@ -169,6 +177,11 @@ const openModal = async (type, data = null) => {
           <UserDelete formData={formData}
           closeModal={closeModal}/>
         )}
+        {modalState.type === "reseteo" && (
+            <UserReset formData={formData}
+            closeModal={closeModal}/>
+          )
+        }
       </Modal>
     </AdminLayout>
 

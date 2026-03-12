@@ -8,20 +8,25 @@ function SidebarCommander({onClick}){
 
     //Para controlar el icono de hidden del navbar
     const [commanderIconState, setCommanderIconState] = useState(faAngleDoubleLeft);
- 
+    const [menuCommanderClass, setMenuCommanderClass] = useState("menu-commander");
+
     function handleClick(){
         onClick();
 
         if(commanderIconState == faAngleDoubleLeft){
+            setMenuCommanderClass("menu-commander collapsed");
             setCommanderIconState(faAngleDoubleRight);
+            
+            
         }else{
-            setCommanderIconState(faAngleDoubleLeft);
+            setCommanderIconState(faAngleDoubleLeft);   
+            setMenuCommanderClass("menu-commander");
         }  
     }  
 
 
     return(
-        <div className="menu-commander">
+        <div className={menuCommanderClass}>
             <button onClick={handleClick} className="menu-commander-icon-button">
                 <FontAwesomeIcon icon={commanderIconState} className="menu-commander-icon"/>
             </button>

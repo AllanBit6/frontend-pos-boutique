@@ -10,7 +10,8 @@
 
 .form-container input[type="text"], 
 .form-container [type="number"], 
-.form-container select{
+.form-container select,
+.form-container input[type="password"]{
     font-family: var(--primary-font);
     font-weight: 600;
     font-size: 12px;

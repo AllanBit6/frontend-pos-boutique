@@ -25,6 +25,7 @@
 }
 
 .data-table-row{
+    transition: 0.1s;
     height: 45px;
     background-color: white;
     font-family: var(--secondary-font);
@@ -33,6 +34,10 @@
     font-weight: 600;
     
 }
+.data-table-row:hover{
+    transition: 0.2s;
+    background-color: rgb(240, 240, 240);
+}
 
 .data-table-row td{
     padding: 10px;  
@@ -40,14 +45,14 @@
 
 .table-action-icon{
     color: var(--custom-darkblue);
-    background-color: none;
+    background-color: transparent;
     font-size: 17px;
     transition: 0.2s;
 }
 
 .table-action-button{
     border: none;
-    background-color: white;
+    background-color: transparent;
     padding: 5px;
     cursor: pointer;
 }

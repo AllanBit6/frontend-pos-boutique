@@ -1,5 +1,8 @@
 .login-container{
-    background: linear-gradient(90deg, #09244E, #21427A);
+    background: linear-gradient(135deg, #09244E, #21427A, #3a5da8);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+
     width: 100%;
     height: 100vh;
     display: flex;
@@ -8,8 +11,17 @@
     justify-content: center;
 }
 
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
 .login-form{
-    background-color: white;
+    animation: fadeLogin 0.5s ease;
+    backdrop-filter: blur(15px);
+
+    background-color: rgb(255, 255, 255);
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -17,15 +29,38 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 40%;
+    width: 30%;
     height: 70%;
+
+    box-shadow: 0px 20px 40px rgba(0,0,0,0.25);
+}
+
+@keyframes fadeLogin{
+    from{
+        opacity:0;
+        transform: translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
 }
 
 .login-key-icon{
     color: var(--custom-green);
     font-size: 40px;
-    padding:20px
+    padding:20px;
+
+    animation: floatKey 3s ease-in-out infinite;
 }
+
+
+@keyframes floatKey{
+    0%{transform: translateY(0);}
+    50%{transform: translateY(-6px);}
+    100%{transform: translateY(0);}
+}
+
 
 .login-form .login-title{
     color: var(--custom-blue);
@@ -50,7 +85,8 @@
 }
 
 #username-input, #password-input{
-    transition: 0.5s;
+    transition: all 0.3s ease;
+
     font-family: var(--third-font);
     font-weight: 600;
     font-size: 15px;
@@ -65,7 +101,7 @@
 
 #username-input:focus, #password-input:focus{
     width: 60%;
-    border: var(--custom-darkblue) 2px solid;
-    transition: 0.5s;
+    border: 2px solid var(--custom-blue);
     background-color: white;
+    box-shadow: 0px 0px 10px rgba(33,66,122,0.3);
 }

@@ -34,7 +34,7 @@ function UserReset({formData, closeModal}){
     }
 
     return(
-        <div>
+        <>
             <form action="" onSubmit={handleReset} className="form-container">
                 <input type="text" 
                     value={formData.id_usuario}
@@ -49,7 +49,7 @@ function UserReset({formData, closeModal}){
 
                 <Button type="caution">Resetear Contraseña</Button>
             </form>
-        </div>
+        </>
     )
 }
 

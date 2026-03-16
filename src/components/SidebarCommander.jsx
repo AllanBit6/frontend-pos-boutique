@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
-import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faAngleDoubleLeft} from "@fortawesome/free-solid-svg-icons";
+
 import "./SidebarCommander.css";
 import { useState } from "react";
 
 function SidebarCommander({onClick}){
 
     //Para controlar el icono de hidden del navbar
-    const [commanderIconState, setCommanderIconState] = useState(faAngleDoubleLeft);
+    const [commanderIconState, setCommanderIconState] = useState(faBars);
     const [menuCommanderClass, setMenuCommanderClass] = useState("menu-commander");
 
     function handleClick(){
@@ -15,7 +15,7 @@ function SidebarCommander({onClick}){
 
         if(commanderIconState == faAngleDoubleLeft){
             setMenuCommanderClass("menu-commander collapsed");
-            setCommanderIconState(faAngleDoubleRight);
+            setCommanderIconState(faBars);
             
             
         }else{

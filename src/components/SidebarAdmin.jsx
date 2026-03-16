@@ -12,7 +12,7 @@ import { logout } from "../services/authService";
 function SidebarAdmin() {
   
   const navigate = useNavigate();
-  const [sidebarCollapse, setSidebarCollapse] = useState("nav-bar");
+  const [sidebarCollapse, setSidebarCollapse] = useState("nav-bar collapsed");
 
   //Toggle para esconder la barra
   function handleClickBar(){

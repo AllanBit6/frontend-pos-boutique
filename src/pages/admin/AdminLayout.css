@@ -1,6 +1,6 @@
 .admin-layout-wrapper{
     flex-direction: column;
-    animation: sectionEntry 0.5s ease;
+    animation: sectionEntry 0.3s ease;
 }
 
 @keyframes sectionEntry{
@@ -33,6 +33,7 @@
     gap: 20px;
     width: 100%;
     align-items: flex-start;
+    margin: 10px;
 }
 
 .h-row-form{
@@ -44,5 +45,18 @@
     gap: 30px;
 }
 
+
+.reports-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
+    gap: 20px;
+}
+
+.report-card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
 
 

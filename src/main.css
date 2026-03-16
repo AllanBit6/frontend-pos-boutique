@@ -15,7 +15,13 @@
   src: url('./assets/fonts/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
 }
 
+@font-face{
+  font-family: 'Raleway';
+  src: url('./assets/fonts/Raleway-VariableFont_wght.ttf') format('truetype');
+}
+
 :root {
+  --login-font-1: 'Raleway', sans-serif;
   --primary-font: 'Inter', sans-serif;
   --secondary-font: 'Istok', sans-serif;
   --third-font: 'Space Grotesk', sans-serif;

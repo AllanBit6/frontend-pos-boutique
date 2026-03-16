@@ -5,25 +5,30 @@ import Searchbar from "../../components/Searchbar";
 function AdminLayout({
   title,
   children,
-  actions
+  actions,
+  table=true
 }) {
   return (
     <div className="admin-layout-wrapper">
 
       <SectionHeader>{title}</SectionHeader>
 
-      <Searchbar />
+      {table == true && (
+        <>
+          <Searchbar />
 
-      <div className="admin-layout-table">
-        <div className="admin-tables">
-          {children}
-        </div>
-      </div>
+          <div className="admin-actions">
+            {actions}
+          </div>
 
-      <div className="admin-actions">
-        {actions}
-      </div>
-
+          <div className="admin-layout-table">
+            <div className="admin-tables">
+              {children}
+            </div>
+          </div>
+        </>       
+      )}
+     
     </div>
   );
 }

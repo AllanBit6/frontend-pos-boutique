@@ -7,9 +7,9 @@
     justify-content: center;
     margin: auto;
 
-    background: linear-gradient(135deg, #09244E, #2c559b, #4e7bdb);
+    background: linear-gradient(135deg, #061c3f, #2c559b, #446dc5);
     background-size: 400% 400%;
-    animation: gradientMove 12s ease infinite;
+    animation: gradientMove 3s ease infinite;
 }
 
 @keyframes gradientMove{
@@ -50,7 +50,7 @@
 
 .login-container .login-flyer h1{
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--login-font-1);
     font-size: 50px;
 }
 

@@ -103,7 +103,7 @@ const handleLogin = async (e) => {
         </form>
 
         <div className="login-flyer">
-          <h1>WELCOME!</h1>
+          <h1>Welcome!</h1>
         </div>
         
 

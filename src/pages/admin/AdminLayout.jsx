@@ -1,6 +1,8 @@
 import "./AdminLayout.css";
 import SectionHeader from "../../components/SectionHeader";
 import Searchbar from "../../components/Searchbar";
+import { useState } from "react";
+import React from "react";
 
 function AdminLayout({
   title,
@@ -8,14 +10,17 @@ function AdminLayout({
   actions,
   table=true
 }) {
+
+  const [search, setSearch] = useState("");
+
   return (
     <div className="admin-layout-wrapper">
 
       <SectionHeader>{title}</SectionHeader>
 
-      {table == true && (
+      {table && (
         <>
-          <Searchbar />
+          <Searchbar onSearch={setSearch} />
 
           <div className="admin-actions">
             {actions}
@@ -23,12 +28,14 @@ function AdminLayout({
 
           <div className="admin-layout-table">
             <div className="admin-tables">
-              {children}
+              {React.Children.map(children, child =>
+                React.cloneElement(child, { search })
+              )}
             </div>
           </div>
-        </>       
+        </>
       )}
-     
+
     </div>
   );
 }

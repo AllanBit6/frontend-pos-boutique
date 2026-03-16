@@ -3,7 +3,11 @@ import { LineChart, ReferenceLine, Line, XAxis, YAxis, Tooltip, ResponsiveContai
 const data = [
   { name: "Enero", ventas: 400 },
   { name: "Febrero", ventas: 300 },
-  { name: "Marzo", ventas: 500 }
+  { name: "Marzo", ventas: 500 },
+  { name: "Abril", ventas: 500 },
+  { name: "Mayo", ventas: 500 },
+  { name: "Junio", ventas: 500 },
+  { name: "Julio", ventas: 500 }
 ];
 
 function HistoryGraph() {

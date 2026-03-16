@@ -16,14 +16,14 @@ import {
 
 // Columnas a mostrar
 const columns = [
-  "ID",
-  "Nombre",
-  "Marca",
-  "Color",
-  "Talla",
-  "Stock",
-  "PrecioVenta",
-  "PrecioCompra"
+  {key: "ID", label:"ID"},
+  {key: "Nombre", label: "Nombre"},
+  {key: "Marca", label: "Marca"},
+  {key: "Color", label: "Color"},
+  {key: "Talla", label: "Talla"},
+  {key: "Stock", label: "Stock"},
+  {key: "PrecioVenta", label: "Precio de Venta"},
+  {key: "PrecioCompra", label: "Precio de Compra"}
 ];
 
 

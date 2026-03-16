@@ -24,11 +24,11 @@ import { obtenerUsuarios } from "../../services/usuarioService";
 
 // Columnas a mostrar
 const columns = [
-  "id_usuario",
-  "nombre",
-  "apellido",
-  "user_name",
-  "createdAt"
+  {key: "id_usuario", label:"ID"},
+  {key: "nombre", label:"Nombre"},
+  {key: "apellido", label:"Apellido"},
+  {key: "user_name", label:"Usuario"},
+  {key: "createdAt", label: "Creacion"}
 ];
 
 

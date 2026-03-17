@@ -1,21 +1,22 @@
-import { PieChart,Legend, Pie, Tooltip, ResponsiveContainer, LabelList } from "recharts";
+import { PieChart,Cell, Legend, Pie, Tooltip, ResponsiveContainer, LabelList } from "recharts";
+import { chartColors } from "./CharColors";
 
-const data = [
-  { name: "Pantalones", ventas: 400 },
-  { name: "Camisas", ventas: 300 },
-  { name: "Sueteres", ventas: 500 },
-  { name: "Calcetines", ventas:  100},
-  { name: "Gorras", ventas: 50 },
-];
 
-function BarGraph() {
+function BarGraph({data}) {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart data={data}>
         <Tooltip />
         <LabelList dataKey="value" position="top"/>
         <Legend/>
-        <Pie dataKey="ventas" label />
+        <Pie dataKey="ventas" nameKey="name" label>
+          {data.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={chartColors.palette[index % chartColors.palette.length]}
+            />
+          ))}
+        </Pie>
       </PieChart>
     </ResponsiveContainer>
   );

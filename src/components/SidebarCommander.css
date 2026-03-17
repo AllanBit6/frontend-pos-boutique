@@ -5,7 +5,7 @@
     flex-direction: column;
     align-items: center;
     justify-content:baseline;
-    padding: 5px;
+    padding: 8px;
     background-color: white;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .menu-commander-icon{
-    font-size: 25px;
+    font-size: 30px;
     color: var(--custom-blue);
     transition: 0.4s;
     padding: 15px 0px;

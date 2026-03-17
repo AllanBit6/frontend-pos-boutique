@@ -1,22 +1,15 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { chartColors } from "./CharColors";
 
-const data = [
-  { name: "Lunes", ventas: 400 },
-  { name: "Martes", ventas: 300 },
-  { name: "Miercoles", ventas: 500 },
-  { name: "Jueves", ventas: 450 },
-  { name: "Viernes", ventas: 600},
-  { name: "Sabado", ventas:  100}
-];
 
-function BarGraph() {
+function BarGraph({data}) {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={data}>
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="ventas" />
+        <Bar dataKey="ventas" fill={chartColors.primary}/>
       </BarChart>
     </ResponsiveContainer>
   );

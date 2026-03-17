@@ -1,0 +1,71 @@
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 24px;
+  width: fit-content;
+  border-left: 5px solid var(--custom-darkblue);
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+  
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card-date {
+  font-size: 12px;
+  color: #888;
+  font-family: var(--secondary-font);
+}
+
+.stat-card-date.hidden{
+    color: transparent;
+}
+
+.stat-card-title {
+  font-family: var(--secondary-font);
+  font-size: 16px;
+  color: var(--custom-darkblue);
+  font-weight: 600;
+}
+
+.stat-card-value {
+  font-family: var(--third-font);
+  color: black;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-card-legend {
+  font-family: var(--secondary-font);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.positive {
+  color: #16a34a; /* verde moderno */
+}
+
+.negative {
+  color: #dc2626; /* rojo moderno */
+}
+
+.neutral {
+  color: #6b7280; /* gris elegante */
+}
+
+.stat-card-legend::before {
+  content: "● ";
+  font-size: 10px;
+}
+
+.stat-card.positive { border-left: 5px solid #16a34a; }
+.stat-card.negative { border-left: 5px solid #dc2626; }
+.stat-card.neutral { border-left: 5px solid #6b7280; }

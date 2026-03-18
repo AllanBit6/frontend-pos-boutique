@@ -28,7 +28,8 @@ const columns = [
   {key: "nombre", label:"Nombre"},
   {key: "apellido", label:"Apellido"},
   {key: "user_name", label:"Usuario"},
-  {key: "createdAt", label: "Creacion"}
+  {key: "createdAt", label: "Creacion"},
+  {key: "rol", label: "Rol"}
 ];
 
 

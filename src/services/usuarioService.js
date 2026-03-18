@@ -9,7 +9,19 @@ export const obtenerUsuarios = async () => {
 
     try{
         const res = await axios.get(`${API}/api/v1/usuarios`, {withCredentials:true})
-        return res.data;
+
+        const mapUser = (user) => ({
+            id_usuario: user.id_usuario,
+            nombre: user.nombre,
+            apellido: user.apellido,
+            user_name: user.user_name,
+            createdAt: new Date(user.createdAt).toLocaleDateString(),
+            rol: user.rol?.nombre || "Sin rol"
+            });
+
+        const user_model = res.data.map(mapUser);
+
+        return user_model;
     }catch(error){
         console.log(error);
     }

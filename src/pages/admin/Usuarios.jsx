@@ -114,10 +114,7 @@ const openModal = async (type, data = null) => {
     try {
       //Obtiene el IDe desde la tabla
       const usuarioCompleto = await obtenerUsuariosPorID(data.id_usuario);
-      setFormData({
-                ...usuarioCompleto,
-                rolNombre: usuarioCompleto.rol?.nombre || "", // aplanado
-                }); // llena el formulario, aplnando el rol
+      setFormData({...usuarioCompleto});
     } catch (error) {
       console.error("No se pudo cargar el usuario:", error);
     }

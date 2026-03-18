@@ -16,6 +16,7 @@ export const obtenerUsuarios = async () => {
             apellido: user.apellido,
             user_name: user.user_name,
             createdAt: new Date(user.createdAt).toLocaleDateString(),
+            rol_id: user.rol?.rol_id,
             rol: user.rol?.nombre || "Sin rol"
             });
 
@@ -32,7 +33,22 @@ export const obtenerUsuariosPorID = async(id) => {
 
     try{
         const res = await axios.get(`${API}/api/v1/usuarios/${id}`, {withCredentials:true});
-        return res.data;
+        const user = res.data;
+
+        const user_model = {
+            id_usuario: user.id_usuario,
+            nombre: user.nombre,
+            apellido: user.apellido,
+            user_name: user.user_name,
+            createdAt: new Date(user.createdAt).toLocaleDateString(),
+            rol_id: user.rol?.id_rol,
+            rol: user.rol?.nombre || "Sin rol"
+            };
+        
+
+            console.log(user_model)
+        return user_model;
+
     }catch(error){
         console.log(error)
     }
@@ -70,7 +86,6 @@ export const desactivarUsuario = async (id) => {
         console.error("Error eliminando usuario:", error.response?.data || error.message);
         throw error; 
     }
-
 }
 
 //RESETEAR

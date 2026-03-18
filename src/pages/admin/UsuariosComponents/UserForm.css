@@ -47,7 +47,7 @@
     
 }
 
-.form-container label{
+.form-container label, .form-container p{
     font-family: var(--primary-font);
     font-weight: 800;
     font-size: 12px;
@@ -56,7 +56,7 @@
 }
 
 .form-prev-img{
-    width: 60%;
-    height: auto;
+    width: 200px;
+    height: 250px;
     border-radius: 10px;
 }

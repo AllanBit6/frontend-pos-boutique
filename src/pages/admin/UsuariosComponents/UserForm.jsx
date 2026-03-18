@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./UserForm.css";
 import { crearUsuario, actualizarUsuario } from "../../../services/usuarioService";
 import { sileo } from "sileo";
+import CustomFileInput from "../../../components/CustomFileInput";
 
 function UserForm({ mode, formData, setFormData, closeModal }) {
 
@@ -61,7 +62,14 @@ const handleSubmit = async (e) => {
 
     } else {
 
-      const promise = actualizarUsuario(userData, id_usuario);
+      const userDataUpdate = {
+        nombre:userData.nombre,
+        apellido:userData.apellido,
+        user_name:userData.user_name,
+        rol_id:userData.rol_id
+      };
+
+      const promise = actualizarUsuario(userDataUpdate, id_usuario);
 
       await sileo.promise(promise, {
         loading: {
@@ -137,14 +145,20 @@ const handleSubmit = async (e) => {
             required
           />
 
-          <label>Contraseña</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password || ""}
-            onChange={handleChange}
-            required
-          />
+          {mode === "create" && (
+            <>
+            <label>Contraseña</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password || ""}
+              onChange={handleChange}
+              required
+            />
+            </>
+          )
+          }
+          
 
           <label>Rol</label>
           <select
@@ -168,15 +182,10 @@ const handleSubmit = async (e) => {
             alt=""
             className="form-prev-img"
           />
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              if (file) setSelectedImage(URL.createObjectURL(file));
-            }}
-          />
+          
+          <CustomFileInput onFileSelect={(file) => {
+            setSelectedImage(URL.createObjectURL(file));
+          }}/>
 
         </article>
 

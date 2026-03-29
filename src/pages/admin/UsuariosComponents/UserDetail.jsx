@@ -17,7 +17,7 @@ function UserDetail({ formData }) {
       <input type="text" value={formData.user_name || ""} readOnly />
 
       <label>Rol</label>
-      <input type="text" value={formData.rolNombre || ""} readOnly />
+      <input type="text" value={formData.rol || ""} readOnly />
 
     </div>
   );

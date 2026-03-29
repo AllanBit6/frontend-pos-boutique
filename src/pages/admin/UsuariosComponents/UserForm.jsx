@@ -178,7 +178,7 @@ const handleSubmit = async (e) => {
         <article className="form-right-side">
 
           <img
-            src={selectedImage || "#"}
+            src={selectedImage || "https://fastly.picsum.photos/id/53/1280/1280.jpg?hmac=QP5opo-oENp5iFwsSiWH8azQuR0w0bwps6MT6yvhKwA"}
             alt=""
             className="form-prev-img"
           />

@@ -2,12 +2,14 @@ import AdminLayout from "./AdminLayout";
 import DataTable from "../../components/DataTable";
 import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
+
 import UserForm from "./UsuariosComponents/UserForm";
 import UserDetail from "./UsuariosComponents/UserDetail";
 import UserDelete from "./UsuariosComponents/UserDelete";
 import UserReset from "./UsuariosComponents/UserReset";
 
 import { obtenerUsuariosPorID } from "../../services/usuarioService";
+import { obtenerUsuarios } from "../../services/usuarioService";
 import {sileo } from "sileo";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -18,7 +20,7 @@ import {
   faCircleInfo,
   faUnlockKeyhole,
 } from "@fortawesome/free-solid-svg-icons";
-import { obtenerUsuarios } from "../../services/usuarioService";
+
 
 
 

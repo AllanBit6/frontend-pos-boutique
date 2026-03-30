@@ -3,9 +3,20 @@ import DataTable from "../../components/DataTable";
 import AdminLayout from "./AdminLayout";
 import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
+
+import ProductForm from "./InventarioComponents/ProductForm";
+import ProductDetail from "./InventarioComponents/ProductDetail";
+import ProductDelete from "./InventarioComponents/ProductDelete";
 import BarcodeCanvas from "./InventarioComponents/BarcodeCanvas";
 
+
+
+import { obtenerProductosPorID } from "../../services/inventarioService";
+import { obtenerProductos } from "../../services/inventarioService";
+import {sileo } from "sileo";
 import { useState } from "react";
+import { useEffect } from "react";
+
 
 import {
   faPencil,
@@ -14,42 +25,19 @@ import {
   faBarcode,
 } from "@fortawesome/free-solid-svg-icons";
 
+
 // Columnas a mostrar
 const columns = [
-  {key: "ID", label:"ID"},
-  {key: "Nombre", label: "Nombre"},
-  {key: "Marca", label: "Marca"},
-  {key: "Color", label: "Color"},
-  {key: "Talla", label: "Talla"},
-  {key: "Stock", label: "Stock"},
-  {key: "PrecioVenta", label: "Precio de Venta"},
-  {key: "PrecioCompra", label: "Precio de Compra"}
+  {key: "id_producto", label:"ID"},
+  {key: "nombre", label: "Nombre"},
+  {key: "marca", label: "Marca"},
+  {key: "color", label: "Color"},
+  {key: "talla", label: "Talla"},
+  {key: "stock", label: "Stock"},
+  {key: "precio_venta", label: "Precio de Venta"},
+  {key: "precio_compra", label: "Precio de Compra"}
 ];
 
-
-
-
-// Datos de ejemplo
-const data = [
-  {
-    ID: 1,
-    Nombre: "Playera",
-    Marca: "Nike",
-    Color: "Negro",
-    Talla: "S",
-    Stock: 50,
-    PrecioVenta: "Q" + 150,
-  },
-  {
-    ID: 2,
-    Nombre: "Pantalon",
-    Marca: "Hillfinger",
-    Color: "Blanco",
-    Talla: "M",
-    Stock: 15,
-    PrecioVenta: "Q" + 90,
-  },
-];
 
 //Mapa de iconos
 const iconMap = {
@@ -80,6 +68,36 @@ function Inventario() {
     },
   ];
 
+
+  //Informacion para la tabla
+    const [data, setData] = useState([]);
+  
+  useEffect(() => {
+  
+    const promise = obtenerProductos().then(setData);
+  
+      sileo.promise(promise, {
+        loading: {
+          title: "Cargando productos",
+          description: "Obteniendo información..."
+        },
+        success: {
+          title: "Productos cargados",
+          description: "Datos obtenidos correctamente",
+          duration:1500
+        },
+        error: {
+          title: "Error",
+          description: "No se pudieron cargar los productos",
+          duration:1500
+        }
+      });
+  
+  }, []);
+
+
+
+
   //Estado para controlar el despliegue del Modal
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -89,26 +107,24 @@ function Inventario() {
   //Estado para setear la info del producto por fila
   const [formData, setFormData] = useState({});
 
-  //Funcion para recoger la info de la fila y mandarla al formulario
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   //Mapeo de acciones por modal
-  const openModal = (type, data = null) => {
+  const openModal = async (type, data = null) => {
     setModalState({
       isOpen: true,
       type,
       data,
     });
 
-    if (data) {
-      setFormData(data);
-    }
-  };
+    if ((type === "editar" || type === "detalle" || type === "eliminar") && data?.id_producto) {
+        try {
+          //Obtiene el IDe desde la tabla
+          const productoCompleto = await obtenerProductosPorID(data.id_producto);
+          setFormData({...productoCompleto});
+        } catch (error) {
+          console.error("No se pudo cargar el producto:", error);
+        }
+      }
+};
 
   const closeModal = () => {
     setModalState({
@@ -117,21 +133,12 @@ function Inventario() {
       data: null,
     });
 
-    setSelectedImage(null);
   };
-
-  //Estado para cambiar la imagen de previsualizacion
-  const [selectedImage, setSelectedImage] = useState(null);
-
-
-
-
-
 
 
   const adminActions = (
     <>
-    <ButtonLight type="accept" onClick={() => openModal("agregar")}>
+        <ButtonLight type="accept" onClick={() => openModal("agregar")}>
           Registrar nuevo
         </ButtonLight>
         <ButtonLight type="default">Gestionar tallas</ButtonLight>
@@ -139,421 +146,54 @@ function Inventario() {
     </>
   )
 
+
+  console.log("DATA:", data);
   //Regreso del render
   return (
 
     <AdminLayout title="INVENTARIO" actions={adminActions}>
+
       <DataTable
             columns={columns}
             data={data}
             actions={actions}
             iconMap={iconMap}
           />
+
+
       <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Productos">
+
+
+
+        
         {modalState.type === "agregar" && (
-          <form
-            className="form-container"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log("Enviar a API");
-              closeModal();
-            }}
-          >
-            <div className="h-row-form">
-              <article className="form-left-side">
-                <label>Nombre del producto</label>
-                <input type="text" required />
-                <label>Marca</label>
-                <input type="text" required />
-                <div className="h-row-form">
-                  <label>Color</label>
-                  <label>Talla</label>
-                </div>
-                <div className="h-row-form">
-                  <input type="text" />
-                  <input type="number" min={0} />
-                </div>
-
-                <label>Stock</label>
-                <input type="number" min={0} />
-
-                <div className="h-row-form">
-                  <label>Precio compra</label>
-                  <label>Precio venta</label>
-                </div>
-                <div className="h-row-form">
-                  <input type="number" min={0} />
-                  <input type="number" min={0} />
-                </div>
-              </article>
-              <article className="form-right-side">
-                <img
-                  src={selectedImage || "#"}
-                  alt=""
-                  className="form-prev-img"
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) setSelectedImage(URL.createObjectURL(file));
-                  }}
-                />
-
-                <label>Descripcion</label>
-                <textarea></textarea>
-              </article>
-            </div>
-
-            <button type="submit" className="btn-light accept">
-              Guardar
-            </button>
-          </form>
+          <ProductForm mode="create"
+          formData={formData}
+          setFormData={setFormData}
+          closeModal={closeModal}/>
         )}
 
         {modalState.type === "editar" && (
-          <form
-            className="form-container"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log("Enviar a API:", formData);
-              closeModal();
-            }}
-          >
-            <div className="h-row-form">
-              <article className="form-left-side">
-                <label>ID</label>
-                <input
-                  type="text"
-                  name="ID"
-                  value={formData.ID || ""}
-                  readOnly
-                />
-
-                <label>Nombre del producto</label>
-                <input
-                  type="text"
-                  name="Nombre"
-                  value={formData.Nombre || ""}
-                  onChange={handleChange}
-                  required
-                />
-
-                <label>Marca</label>
-                <input
-                  type="text"
-                  name="Marca"
-                  value={formData.Marca || ""}
-                  onChange={handleChange}
-                  required
-                />
-
-                <div className="h-row-form">
-                  <label>Color</label>
-                  <label>Talla</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="text"
-                    name="Color"
-                    value={formData.Color || ""}
-                    onChange={handleChange}
-                  />
-
-                  <input
-                    type="text"
-                    name="Talla"
-                    value={formData.Talla || ""}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <label>Stock</label>
-                <input
-                  type="number"
-                  min={0}
-                  name="Stock"
-                  value={formData.Stock || ""}
-                  onChange={handleChange}
-                />
-
-                <div className="h-row-form">
-                  <label>Precio compra</label>
-                  <label>Precio venta</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="number"
-                    min={0}
-                    name="PrecioCompra"
-                    value={formData.PrecioCompra || ""}
-                    onChange={handleChange}
-                  />
-
-                  <input
-                    type="text"
-                    min={0}
-                    name="PrecioVenta"
-                    value={formData.PrecioVenta || ""}
-                    onChange={handleChange}
-                  />
-                </div>
-              </article>
-
-              <article className="form-right-side">
-                <img
-                  src={selectedImage || "#"}
-                  alt=""
-                  className="form-prev-img"
-                />
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) setSelectedImage(URL.createObjectURL(file));
-                  }}
-                />
-
-                <label>Descripcion</label>
-                <textarea
-                  name="Descripcion"
-                  value={formData.Descripcion || ""}
-                  onChange={handleChange}
-                />
-              </article>
-            </div>
-
-            <button type="submit" className="btn-light accept">
-              Guardar
-            </button>
-          </form>
+          <ProductForm mode="edit"
+          formData={formData}
+          setFormData={setFormData}
+          closeModal={closeModal}  
+          />
         )}
 
         {modalState.type === "detalle" && (
-          <form className="form-container">
-            <div className="h-row-form">
-              <article className="form-left-side">
-                <label>ID</label>
-                <input
-                  type="text"
-                  name="ID"
-                  value={formData.ID || ""}
-                  readOnly
-                />
-
-                <label>Nombre del producto</label>
-                <input
-                  type="text"
-                  name="Nombre"
-                  value={formData.Nombre || ""}
-                  readOnly
-                />
-
-                <label>Marca</label>
-                <input
-                  type="text"
-                  name="Marca"
-                  value={formData.Marca || ""}
-                  required
-                  readOnly
-                />
-
-                <div className="h-row-form">
-                  <label>Color</label>
-                  <label>Talla</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="text"
-                    name="Color"
-                    value={formData.Color || ""}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    name="Talla"
-                    value={formData.Talla || ""}
-                    readOnly
-                  />
-                </div>
-
-                <label>Stock</label>
-                <input
-                  type="number"
-                  min={0}
-                  name="Stock"
-                  value={formData.Stock || ""}
-                  readOnly
-                />
-
-                <div className="h-row-form">
-                  <label>Precio compra</label>
-                  <label>Precio venta</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="number"
-                    min={0}
-                    name="PrecioCompra"
-                    value={formData.PrecioCompra || ""}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    min={0}
-                    name="PrecioVenta"
-                    value={formData.PrecioVenta || ""}
-                    readOnly
-                  />
-                </div>
-              </article>
-
-              <article className="form-right-side">
-                <img
-                  src={selectedImage || "#"}
-                  alt=""
-                  className="form-prev-img"
-                />
-
-                <label>Descripcion</label>
-                <textarea
-                  name="Descripcion"
-                  value={formData.Descripcion || ""}
-                  readOnly
-                />
-                <div>
-                    <BarcodeCanvas productID={modalState.data?.ID} />
-                </div>
-              </article>
-            </div>
-          </form>
+          <ProductDetail formData={formData}/>
         )}
 
         {modalState.type === "barcode" && (
           <div>
-            <BarcodeCanvas productID={modalState.data?.ID} />
+            <BarcodeCanvas productID={modalState.data?.id_producto} />
           </div>
         )}
 
         {modalState.type === "eliminar" && (
-          <form
-            className="form-container"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log("Enviar a API:", formData);
-              closeModal();
-            }}
-          >
-            <div className="h-row-form">
-              <article className="form-left-side">
-                <label>ID</label>
-                <input
-                  type="text"
-                  name="ID"
-                  value={formData.ID || ""}
-                  readOnly
-                />
-
-                <label>Nombre del producto</label>
-                <input
-                  type="text"
-                  name="Nombre"
-                  value={formData.Nombre || ""}
-                  readOnly
-                />
-
-                <label>Marca</label>
-                <input
-                  type="text"
-                  name="Marca"
-                  value={formData.Marca || ""}
-                  required
-                  readOnly
-                />
-
-                <div className="h-row-form">
-                  <label>Color</label>
-                  <label>Talla</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="text"
-                    name="Color"
-                    value={formData.Color || ""}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    name="Talla"
-                    value={formData.Talla || ""}
-                    readOnly
-                  />
-                </div>
-
-                <label>Stock</label>
-                <input
-                  type="number"
-                  min={0}
-                  name="Stock"
-                  value={formData.Stock || ""}
-                  readOnly
-                />
-
-                <div className="h-row-form">
-                  <label>Precio compra</label>
-                  <label>Precio venta</label>
-                </div>
-
-                <div className="h-row-form">
-                  <input
-                    type="number"
-                    min={0}
-                    name="PrecioCompra"
-                    value={formData.PrecioCompra || ""}
-                    readOnly
-                  />
-
-                  <input
-                    type="text"
-                    min={0}
-                    name="PrecioVenta"
-                    value={formData.PrecioVenta || ""}
-                    readOnly
-                  />
-                </div>
-              </article>
-
-              <article className="form-right-side">
-                <img
-                  src={selectedImage || "#"}
-                  alt=""
-                  className="form-prev-img"
-                />
-
-                <label>Descripcion</label>
-                <textarea
-                  name="Descripcion"
-                  value={formData.Descripcion || ""}
-                  readOnly
-                />
-              </article>
-            </div>
-
-            <button type="submit" className="btn-light caution">
-              Eliminar
-            </button>
-          </form>
+          
+          <ProductDelete formData={formData}/>
         )}
       </Modal>
     </AdminLayout>

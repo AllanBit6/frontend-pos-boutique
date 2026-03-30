@@ -3,16 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function DataTable({ columns, data, actions, iconMap, search}) {
 
+
+const filteredData = (data || []).filter(item =>
+  Object.values(item).some(value =>
+    String(value).toLowerCase().includes((search || "").toLowerCase())
+  )
+);
   
-
-
-
-
-  const filteredData = data.filter(item =>
-    Object.values(item).some(value =>
-      String(value).toLowerCase().includes(search.toLowerCase())
-    )
-  );
 
   return (
     <>
@@ -28,7 +25,7 @@ export default function DataTable({ columns, data, actions, iconMap, search}) {
 
         <tbody className="data-table-body">
           {filteredData.map(item => (
-            <tr key={item.id} className="data-table-row">
+            <tr key={item[columns[0].key]} className="data-table-row">
               {columns.map(col => (
                 <td key={col.key}>{item[col.key]}</td>
               ))}

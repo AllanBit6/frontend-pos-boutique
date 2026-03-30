@@ -123,6 +123,7 @@ export const crearProducto = async (new_product) => {
         return res.data;
     }catch(error){
         console.error("Error creando producto:", error.response?.data || error.message);
+        datosPrueba.push(new_product)
         throw error;
     }
 }

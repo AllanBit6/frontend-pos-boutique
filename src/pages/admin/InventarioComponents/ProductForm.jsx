@@ -128,7 +128,7 @@ const handleSubmit = async (e) => {
 
                 <label>Nombre del producto</label>
                 <input type="text"
-                      name="product_name"
+                      name="nombre"
                       value={formData.nombre || ""}
                       onChange={handleChange}
                       required/>

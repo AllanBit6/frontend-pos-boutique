@@ -1,13 +1,11 @@
 import AdminLayout from "./AdminLayout";
 import DataTable from "../../components/DataTable";
-import ButtonLight from "../../components/ButtonLight";
 import Modal from "../../components/Modal";
 
 /*Cambiar*/
-import UserForm from "./UsuariosComponents/UserForm";
-import UserDetail from "./UsuariosComponents/UserDetail";
-import UserDelete from "./UsuariosComponents/UserDelete";
-import UserReset from "./UsuariosComponents/UserReset";
+import SaleDetail from "./VentasComponents/SaleDetail";
+import SaleCancel from "./VentasComponents/SaleCancel";
+
 
 /*Cambiar*/
 import { obtenerVentasPorID } from "../../services/ventasService";
@@ -68,17 +66,17 @@ useEffect(() => {
 
     sileo.promise(promise, {
       loading: {
-        title: "Cargando usuarios",
+        title: "Cargando ventas",
         description: "Obteniendo información..."
       },
       success: {
-        title: "Usuarios cargados",
+        title: "Ventas cargadas",
         description: "Datos obtenidos correctamente",
         duration:1500
       },
       error: {
         title: "Error",
-        description: "No se pudieron cargar los usuarios",
+        description: "No se pudieron cargar las ventas",
         duration:1500
       }
     });
@@ -145,18 +143,14 @@ const openModal = async (type, data = null) => {
             iconMap={iconMap}
           />
       
-      <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Usuarios">
-        {modalState.type === "agregar" && (
-          <UserForm mode="create"
-          formData={formData}
-          setFormData={setFormData}
-          closeModal={closeModal}  
-          />  
+      <Modal isOpen={modalState.isOpen} onClose={closeModal} title="Ventas">
+        {modalState.type === "detalle" && (
+          <SaleDetail formData={formData}/>
         )}
 
-        {modalState.type === "detalle" && (
-          <UserDetail formData={formData}/>
-        )}
+        {
+
+        }
       </Modal>
     </AdminLayout>
 
